@@ -107,6 +107,53 @@
     "saveSuccess": "Settings saved successfully!",
     "saveError": "Failed to save settings"
   },
+  "wizard": {
+    "welcome": {
+      "title": "Welcome to TempBin",
+      "subtitle": "Let's get you set up with your Cloudflare R2 storage.",
+      "start": "Get Started"
+    },
+    "step1": {
+      "title": "Account & Bucket",
+      "description": "Enter your Cloudflare Account ID and the R2 Bucket Name you want to use.",
+      "instructions": {
+        "title": "How to find these?",
+        "step1": "Log in to your Cloudflare dashboard.",
+        "step2": "Navigate to R2 from the sidebar.",
+        "step3": "Your Account ID is shown on the right side of the R2 overview page.",
+        "step4": "Create a new bucket or use an existing one and copy its name."
+      }
+    },
+    "step2": {
+      "title": "Credentials",
+      "description": "Enter your R2 Access Key ID and Secret Access Key.",
+      "instructions": {
+        "title": "How to generate keys?",
+        "step1": "In the R2 dashboard, click on 'Manage R2 API Tokens' on the right.",
+        "step2": "Click 'Create API Token'.",
+        "step3": "Select 'Object Read & Write' permissions.",
+        "step4": "Create the token and copy the Access Key ID and Secret Access Key."
+      }
+    },
+    "step3": {
+      "title": "Public Access",
+      "description": "Optionally configure a custom domain for public file access.",
+      "instructions": {
+        "title": "Setting up public access",
+        "step1": "Go to your bucket settings in the R2 dashboard.",
+        "step2": "Under 'Public Access', you can connect a custom domain or allow public access via R2.dev subdomain.",
+        "step3": "Enter the full URL (e.g., https://files.example.com) here."
+      }
+    },
+    "completion": {
+      "title": "All Set!",
+      "subtitle": "Your R2 storage is configured and ready to use.",
+      "finish": "Start Sharing"
+    },
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip"
+  },
   "notifications": {
     "uploadSuccess": "File uploaded successfully!",
     "uploadError": "Failed to upload file. Please check your R2 settings.",

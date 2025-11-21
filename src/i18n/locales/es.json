@@ -107,6 +107,53 @@
     "saveSuccess": "¡Configuración guardada exitosamente!",
     "saveError": "Error al guardar la configuración"
   },
+  "wizard": {
+    "welcome": {
+      "title": "Bienvenido a TempBin",
+      "subtitle": "Configuremos su almacenamiento Cloudflare R2.",
+      "start": "Comenzar"
+    },
+    "step1": {
+      "title": "Cuenta y Bucket",
+      "description": "Ingrese su ID de cuenta de Cloudflare y el nombre del Bucket R2 que desea usar.",
+      "instructions": {
+        "title": "¿Cómo encontrar esto?",
+        "step1": "Inicie sesión en su panel de Cloudflare.",
+        "step2": "Navegue a R2 desde la barra lateral.",
+        "step3": "Su ID de cuenta se muestra en el lado derecho de la página de descripción general de R2.",
+        "step4": "Cree un nuevo bucket o use uno existente y copie su nombre."
+      }
+    },
+    "step2": {
+      "title": "Credenciales",
+      "description": "Ingrese su ID de clave de acceso R2 y su clave de acceso secreta.",
+      "instructions": {
+        "title": "¿Cómo generar claves?",
+        "step1": "En el panel de R2, haga clic en 'Administrar tokens de API R2' a la derecha.",
+        "step2": "Haga clic en 'Crear token de API'.",
+        "step3": "Seleccione los permisos 'Lectura y escritura de objetos'.",
+        "step4": "Cree el token y copie el ID de clave de acceso y la clave de acceso secreta."
+      }
+    },
+    "step3": {
+      "title": "Acceso público",
+      "description": "Opcionalmente, configure un dominio personalizado para el acceso público a archivos.",
+      "instructions": {
+        "title": "Configuración del acceso público",
+        "step1": "Vaya a la configuración de su bucket en el panel de R2.",
+        "step2": "En 'Acceso público', puede conectar un dominio personalizado o permitir el acceso público a través del subdominio R2.dev.",
+        "step3": "Ingrese la URL completa (por ejemplo, https://files.example.com) aquí."
+      }
+    },
+    "completion": {
+      "title": "¡Todo listo!",
+      "subtitle": "Su almacenamiento R2 está configurado y listo para usar.",
+      "finish": "Empezar a compartir"
+    },
+    "next": "Siguiente",
+    "back": "Atrás",
+    "skip": "Omitir"
+  },
   "notifications": {
     "uploadSuccess": "¡Archivo subido exitosamente!",
     "uploadError": "Error al subir el archivo. Por favor verifica tu configuración de R2.",

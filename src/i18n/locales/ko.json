@@ -103,7 +103,54 @@
     "saving": "저장 중...",
     "requiredFields": "모든 필수 필드를 입력하세요",
     "saveSuccess": "설정이 성공적으로 저장되었습니다!",
-    "saveError": "설정 저장 실패"
+    "saveError": "설정을 저장하지 못했습니다"
+  },
+  "wizard": {
+    "welcome": {
+      "title": "TempBin에 오신 것을 환영합니다",
+      "subtitle": "Cloudflare R2 스토리지를 설정해 봅시다.",
+      "start": "시작하기"
+    },
+    "step1": {
+      "title": "계정 및 버킷",
+      "description": "Cloudflare 계정 ID와 사용할 R2 버킷 이름을 입력하세요.",
+      "instructions": {
+        "title": "정보를 찾는 방법",
+        "step1": "Cloudflare 대시보드에 로그인합니다.",
+        "step2": "사이드바에서 R2로 이동합니다.",
+        "step3": "계정 ID는 R2 개요 페이지의 오른쪽에 표시됩니다.",
+        "step4": "새 버킷을 만들거나 기존 버킷을 사용하여 이름을 복사합니다."
+      }
+    },
+    "step2": {
+      "title": "자격 증명",
+      "description": "R2 액세스 키 ID와 비밀 액세스 키를 입력하세요.",
+      "instructions": {
+        "title": "키 생성 방법",
+        "step1": "R2 대시보드에서 오른쪽의 'R2 API 토큰 관리'를 클릭합니다.",
+        "step2": "'API 토큰 만들기'를 클릭합니다.",
+        "step3": "'객체 읽기 및 쓰기' 권한을 선택합니다.",
+        "step4": "토큰을 생성하고 액세스 키 ID와 비밀 액세스 키를 복사합니다."
+      }
+    },
+    "step3": {
+      "title": "공개 액세스",
+      "description": "선택적으로 파일 공개 액세스를 위한 사용자 지정 도메인을 구성합니다.",
+      "instructions": {
+        "title": "공개 액세스 설정",
+        "step1": "R2 대시보드에서 버킷 설정으로 이동합니다.",
+        "step2": "'공개 액세스'에서 사용자 지정 도메인을 연결하거나 R2.dev 하위 도메인을 통한 공개 액세스를 허용할 수 있습니다.",
+        "step3": "여기에 전체 URL(예: https://files.example.com)을 입력합니다."
+      }
+    },
+    "completion": {
+      "title": "준비 완료!",
+      "subtitle": "R2 스토리지가 구성되었으며 사용할 준비가 되었습니다.",
+      "finish": "공유 시작"
+    },
+    "next": "다음",
+    "back": "뒤로",
+    "skip": "건너뛰기"
   },
   "notifications": {
     "uploadSuccess": "파일이 성공적으로 업로드되었습니다!",

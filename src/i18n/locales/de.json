@@ -105,6 +105,53 @@
     "saveSuccess": "Einstellungen erfolgreich gespeichert!",
     "saveError": "Fehler beim Speichern der Einstellungen"
   },
+  "wizard": {
+    "welcome": {
+      "title": "Willkommen bei TempBin",
+      "subtitle": "Lassen Sie uns Ihren Cloudflare R2-Speicher einrichten.",
+      "start": "Loslegen"
+    },
+    "step1": {
+      "title": "Konto & Bucket",
+      "description": "Geben Sie Ihre Cloudflare-Konto-ID und den Namen des R2-Buckets ein, den Sie verwenden möchten.",
+      "instructions": {
+        "title": "Wie finde ich diese?",
+        "step1": "Melden Sie sich in Ihrem Cloudflare-Dashboard an.",
+        "step2": "Navigieren Sie in der Seitenleiste zu R2.",
+        "step3": "Ihre Konto-ID wird auf der rechten Seite der R2-Übersichtsseite angezeigt.",
+        "step4": "Erstellen Sie einen neuen Bucket oder verwenden Sie einen vorhandenen und kopieren Sie dessen Namen."
+      }
+    },
+    "step2": {
+      "title": "Anmeldeinformationen",
+      "description": "Geben Sie Ihre R2 Access Key ID und Secret Access Key ein.",
+      "instructions": {
+        "title": "Wie generiere ich Schlüssel?",
+        "step1": "Klicken Sie im R2-Dashboard rechts auf 'R2 API-Token verwalten'.",
+        "step2": "Klicken Sie auf 'API-Token erstellen'.",
+        "step3": "Wählen Sie die Berechtigungen 'Objekt lesen & schreiben'.",
+        "step4": "Erstellen Sie das Token und kopieren Sie die Access Key ID und den Secret Access Key."
+      }
+    },
+    "step3": {
+      "title": "Öffentlicher Zugriff",
+      "description": "Konfigurieren Sie optional eine benutzerdefinierte Domain für den öffentlichen Dateizugriff.",
+      "instructions": {
+        "title": "Öffentlichen Zugriff einrichten",
+        "step1": "Gehen Sie zu Ihren Bucket-Einstellungen im R2-Dashboard.",
+        "step2": "Unter 'Öffentlicher Zugriff' können Sie eine benutzerdefinierte Domain verbinden oder den öffentlichen Zugriff über die R2.dev-Subdomain erlauben.",
+        "step3": "Geben Sie hier die vollständige URL (z. B. https://files.example.com) ein."
+      }
+    },
+    "completion": {
+      "title": "Alles bereit!",
+      "subtitle": "Ihr R2-Speicher ist konfiguriert und einsatzbereit.",
+      "finish": "Teilen starten"
+    },
+    "next": "Weiter",
+    "back": "Zurück",
+    "skip": "Überspringen"
+  },
   "notifications": {
     "uploadSuccess": "Datei erfolgreich hochgeladen!",
     "uploadError": "Fehler beim Hochladen der Datei. Bitte überprüfen Sie Ihre R2-Einstellungen.",

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './App.css';
@@ -6,7 +5,8 @@ import UploadZone from './components/UploadZone/UploadZone';
 import FileList from './components/FileList/FileList';
 import Header from './components/Header/Header';
 import Settings from './components/Settings/Settings';
-import { FileItem } from './types';
+import OnboardingWizard from './components/OnboardingWizard/OnboardingWizard';
+import { FileItem, R2Config } from './types';
 import { uploadFileToR2, deleteFileFromR2, getFilesList } from './services/r2Service';
 import { persistence } from './utils/persistence';
 
@@ -15,6 +15,7 @@ function App() {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showWizard, setShowWizard] = useState(false);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [notificationFadeOut, setNotificationFadeOut] = useState(false);
   const [fileListFadeOut, setFileListFadeOut] = useState(false);
@@ -27,6 +28,7 @@ function App() {
   useEffect(() => {
     loadFiles();
     checkExpiredFiles();
+    checkR2Settings();
     const interval = setInterval(checkExpiredFiles, 10000); // Check every 10 seconds
     
     const savedExpiration = localStorage.getItem('fileExpirationMinutes');
@@ -84,6 +86,23 @@ function App() {
       }
     } catch (error) {
       console.error('Error loading files:', error);
+    }
+  };
+
+  const checkR2Settings = async () => {
+    try {
+      const savedSettings = await persistence.getItem('r2Settings');
+      if (!savedSettings) {
+        setShowWizard(true);
+      } else {
+        const config: R2Config = JSON.parse(savedSettings);
+        if (!config.accountId || !config.accessKeyId || !config.secretAccessKey || !config.bucketName) {
+          setShowWizard(true);
+        }
+      }
+    } catch (error) {
+      console.error('Error checking R2 settings:', error);
+      setShowWizard(true);
     }
   };
 
@@ -239,86 +258,95 @@ function App() {
         onSettingsClick={() => setShowSettings(true)} 
         theme={theme}
         onThemeToggle={toggleTheme}
+        showSettingsButton={!showWizard}
       />
       
       <main id="main-content" className="main-content" role="main" aria-label="File sharing application">
         <div className="container">
-          <div className="hero-section">
-            <h1 className="hero-title">{t('hero.title')}</h1>
-            <p className="hero-subtitle">
-              {t('hero.subtitle', { count: expirationMinutes, minutes: expirationMinutes })}
-            </p>
-          </div>
-
-          <div className="controls-card">
-            <div className="expiration-control" role="group" aria-labelledby="expiration-label">
-              <label id="expiration-label" htmlFor="mainExpirationSlider">
-                {t('expiration.label')} <strong aria-live="polite">{t('expiration.minutes', { count: expirationMinutes })}</strong>
-              </label>
-              <input
-                id="mainExpirationSlider"
-                type="range"
-                min="1"
-                max="10"
-                step="1"
-                value={expirationMinutes}
-                onChange={(e) => handleExpirationChange(parseInt(e.target.value, 10))}
-                className="expiration-slider"
-                aria-valuemin={1}
-                aria-valuemax={10}
-                aria-valuenow={expirationMinutes}
-                aria-valuetext={`${expirationMinutes} minute${expirationMinutes !== 1 ? 's' : ''}`}
-              />
-              <div className="slider-labels">
-                <span>{t('expiration.min1')}</span>
-                <span>{t('expiration.min5')}</span>
-                <span>{t('expiration.min10')}</span>
-              </div>
-            </div>
-
-            <div className="hash-filename-control" role="group" aria-labelledby="hash-filename-label">
-              <div className="hash-filename-item">
-                <div className="hash-filename-info">
-                  <label id="hash-filename-label" htmlFor="hashFilenameToggle">{t('hashFilename.label')}</label>
-                  <small>{t('hashFilename.hint')}</small>
-                </div>
-                <label className="switch">
-                  <input
-                    id="hashFilenameToggle"
-                    type="checkbox"
-                    checked={hashFilenames}
-                    onChange={(e) => handleHashFilenamesChange(e.target.checked)}
-                    aria-label={t('hashFilename.label')}
-                  />
-                  <span className="switch-slider"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <UploadZone 
-            onFileUpload={handleFileUpload} 
-            isUploading={isUploading}
-            expirationMinutes={expirationMinutes}
-          />
-
-          {files.length > 0 && (
-            <FileList 
-              files={files} 
-              onDeleteFile={handleDeleteFile}
-              onDeleteSelected={handleDeleteSelected}
-              fadeOut={fileListFadeOut}
+          {showWizard ? (
+            <OnboardingWizard 
+              onComplete={() => setShowWizard(false)} 
             />
-          )}
+          ) : (
+            <>
+              <div className="hero-section">
+                <h1 className="hero-title">{t('hero.title')}</h1>
+                <p className="hero-subtitle">
+                  {t('hero.subtitle', { count: expirationMinutes, minutes: expirationMinutes })}
+                </p>
+              </div>
 
-          {files.length === 0 && !isUploading && (
-            <div className="empty-state" role="status" aria-live="polite">
-              <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" role="img" aria-label="No files uploaded">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
-              <h3>{t('empty.title')}</h3>
-              <p>{t('empty.subtitle')}</p>
-            </div>
+              <div className="controls-card">
+                <div className="expiration-control" role="group" aria-labelledby="expiration-label">
+                  <label id="expiration-label" htmlFor="mainExpirationSlider">
+                    {t('expiration.label')} <strong aria-live="polite">{t('expiration.minutes', { count: expirationMinutes })}</strong>
+                  </label>
+                  <input
+                    id="mainExpirationSlider"
+                    type="range"
+                    min="1"
+                    max="10"
+                    step="1"
+                    value={expirationMinutes}
+                    onChange={(e) => handleExpirationChange(parseInt(e.target.value, 10))}
+                    className="expiration-slider"
+                    aria-valuemin={1}
+                    aria-valuemax={10}
+                    aria-valuenow={expirationMinutes}
+                    aria-valuetext={`${expirationMinutes} minute${expirationMinutes !== 1 ? 's' : ''}`}
+                  />
+                  <div className="slider-labels">
+                    <span>{t('expiration.min1')}</span>
+                    <span>{t('expiration.min5')}</span>
+                    <span>{t('expiration.min10')}</span>
+                  </div>
+                </div>
+
+                <div className="hash-filename-control" role="group" aria-labelledby="hash-filename-label">
+                  <div className="hash-filename-item">
+                    <div className="hash-filename-info">
+                      <label id="hash-filename-label" htmlFor="hashFilenameToggle">{t('hashFilename.label')}</label>
+                      <small>{t('hashFilename.hint')}</small>
+                    </div>
+                    <label className="switch">
+                      <input
+                        id="hashFilenameToggle"
+                        type="checkbox"
+                        checked={hashFilenames}
+                        onChange={(e) => handleHashFilenamesChange(e.target.checked)}
+                        aria-label={t('hashFilename.label')}
+                      />
+                      <span className="switch-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <UploadZone 
+                onFileUpload={handleFileUpload} 
+                isUploading={isUploading}
+                expirationMinutes={expirationMinutes}
+              />
+
+              {files.length > 0 && (
+                <FileList 
+                  files={files} 
+                  onDeleteFile={handleDeleteFile}
+                  onDeleteSelected={handleDeleteSelected}
+                  fadeOut={fileListFadeOut}
+                />
+              )}
+
+              {files.length === 0 && !isUploading && (
+                <div className="empty-state" role="status" aria-live="polite">
+                  <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" role="img" aria-label="No files uploaded">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  <h3>{t('empty.title')}</h3>
+                  <p>{t('empty.subtitle')}</p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>

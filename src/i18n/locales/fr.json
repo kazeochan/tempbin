@@ -107,6 +107,53 @@
     "saveSuccess": "Paramètres enregistrés avec succès !",
     "saveError": "Échec de l'enregistrement des paramètres"
   },
+  "wizard": {
+    "welcome": {
+      "title": "Bienvenue sur TempBin",
+      "subtitle": "Configurons votre stockage Cloudflare R2.",
+      "start": "Commencer"
+    },
+    "step1": {
+      "title": "Compte et Bucket",
+      "description": "Entrez votre identifiant de compte Cloudflare et le nom du bucket R2 que vous souhaitez utiliser.",
+      "instructions": {
+        "title": "Comment trouver ces informations ?",
+        "step1": "Connectez-vous à votre tableau de bord Cloudflare.",
+        "step2": "Accédez à R2 depuis la barre latérale.",
+        "step3": "Votre identifiant de compte est affiché sur le côté droit de la page de présentation R2.",
+        "step4": "Créez un nouveau bucket ou utilisez-en un existant et copiez son nom."
+      }
+    },
+    "step2": {
+      "title": "Identifiants",
+      "description": "Entrez votre ID de clé d'accès R2 et votre clé d'accès secrète.",
+      "instructions": {
+        "title": "Comment générer des clés ?",
+        "step1": "Dans le tableau de bord R2, cliquez sur 'Gérer les jetons API R2' à droite.",
+        "step2": "Cliquez sur 'Créer un jeton API'.",
+        "step3": "Sélectionnez les autorisations 'Lecture et écriture d'objets'.",
+        "step4": "Créez le jeton et copiez l'ID de clé d'accès et la clé d'accès secrète."
+      }
+    },
+    "step3": {
+      "title": "Accès public",
+      "description": "Configurez éventuellement un domaine personnalisé pour l'accès public aux fichiers.",
+      "instructions": {
+        "title": "Configuration de l'accès public",
+        "step1": "Allez dans les paramètres de votre bucket dans le tableau de bord R2.",
+        "step2": "Sous 'Accès public', vous pouvez connecter un domaine personnalisé ou autoriser l'accès public via le sous-domaine R2.dev.",
+        "step3": "Entrez l'URL complète (par exemple, https://files.example.com) ici."
+      }
+    },
+    "completion": {
+      "title": "Tout est prêt !",
+      "subtitle": "Votre stockage R2 est configuré et prêt à l'emploi.",
+      "finish": "Commencer le partage"
+    },
+    "next": "Suivant",
+    "back": "Retour",
+    "skip": "Passer"
+  },
   "notifications": {
     "uploadSuccess": "Fichier téléchargé avec succès !",
     "uploadError": "Échec du téléchargement du fichier. Veuillez vérifier vos paramètres R2.",
