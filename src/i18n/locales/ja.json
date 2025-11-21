@@ -103,7 +103,21 @@
     "saving": "保存中...",
     "requiredFields": "すべての必須フィールドを入力してください",
     "saveSuccess": "設定が正常に保存されました！",
-    "saveError": "設定の保存に失敗しました"
+    "saveError": "設定の保存に失敗しました",
+    "clearData": "すべてのデータを消去",
+    "clearDataConfirm": "すべてのデータを消去してもよろしいですか？この操作は取り消せません。",
+    "clearDataSuccess": "すべてのデータが正常に消去されました"
+  },
+  "validation": {
+    "required": "このフィールドは必須です",
+    "invalidAccountId": "無効なアカウントID（32文字の16進数である必要があります）",
+    "bucketNameLength": "バケット名は3〜63文字である必要があります",
+    "bucketNameChars": "小文字、数字、ハイフンのみ使用可能です",
+    "bucketNameHyphen": "バケット名はハイフンで開始または終了できません",
+    "invalidAccessKeyId": "無効なアクセスキーID（32文字の16進数である必要があります）",
+    "invalidSecretAccessKey": "無効なシークレットアクセスキー（64文字の16進数である必要があります）",
+    "invalidUrl": "無効なURL形式",
+    "invalidUrlProtocol": "URLはhttp://またはhttps://で始まる必要があります"
   },
   "wizard": {
     "welcome": {
@@ -152,7 +166,10 @@
         "step2": "CORSポリシーセクションを見つけます。",
         "step3": "以下のJSON設定をコピーします。",
         "step4": "CORSポリシーエディターに貼り付けて保存します。"
-      }
+      },
+      "jsonLabel": "CORS設定JSON",
+      "copy": "コピー",
+      "pasteHint": "これをR2バケットのCORSポリシー設定に貼り付けてください。"
     },
     "completion": {
       "title": "準備完了！",

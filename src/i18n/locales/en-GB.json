@@ -105,7 +105,21 @@
     "saving": "Saving...",
     "requiredFields": "Please fill in all required fields",
     "saveSuccess": "Settings saved successfully!",
-    "saveError": "Failed to save settings"
+    "saveError": "Failed to save settings",
+    "clearData": "Clear All Data",
+    "clearDataConfirm": "Are you sure you want to clear all data? This action cannot be undone.",
+    "clearDataSuccess": "All data cleared successfully"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidAccountId": "Invalid Account ID (must be 32 hex characters)",
+    "bucketNameLength": "Bucket name must be between 3 and 63 characters",
+    "bucketNameChars": "Only lowercase letters, numbers, and hyphens allowed",
+    "bucketNameHyphen": "Bucket name cannot start or end with a hyphen",
+    "invalidAccessKeyId": "Invalid Access Key ID (must be 32 hex characters)",
+    "invalidSecretAccessKey": "Invalid Secret Access Key (must be 64 hex characters)",
+    "invalidUrl": "Invalid URL format",
+    "invalidUrlProtocol": "URL must start with http:// or https://"
   },
   "wizard": {
     "welcome": {
@@ -154,7 +168,10 @@
         "step2": "Locate the CORS Policy section.",
         "step3": "Copy the JSON configuration below.",
         "step4": "Paste it into the CORS Policy editor and save."
-      }
+      },
+      "jsonLabel": "CORS Configuration JSON",
+      "copy": "Copy",
+      "pasteHint": "Paste this into your R2 bucket's CORS policy settings."
     },
     "completion": {
       "title": "All Set!",

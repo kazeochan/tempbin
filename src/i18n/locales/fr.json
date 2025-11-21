@@ -105,7 +105,21 @@
     "saving": "Enregistrement...",
     "requiredFields": "Veuillez remplir tous les champs requis",
     "saveSuccess": "Paramètres enregistrés avec succès !",
-    "saveError": "Échec de l'enregistrement des paramètres"
+    "saveError": "Échec de l'enregistrement des paramètres",
+    "clearData": "Effacer toutes les données",
+    "clearDataConfirm": "Êtes-vous sûr de vouloir effacer toutes les données ? Cette action est irréversible.",
+    "clearDataSuccess": "Toutes les données ont été effacées avec succès"
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "invalidAccountId": "ID de compte invalide (doit comporter 32 caractères hexadécimaux)",
+    "bucketNameLength": "Le nom du bucket doit comporter entre 3 et 63 caractères",
+    "bucketNameChars": "Seuls les lettres minuscules, les chiffres et les traits d'union sont autorisés",
+    "bucketNameHyphen": "Le nom du bucket ne peut pas commencer ou se terminer par un trait d'union",
+    "invalidAccessKeyId": "ID de clé d'accès invalide (doit comporter 32 caractères hexadécimaux)",
+    "invalidSecretAccessKey": "Clé d'accès secrète invalide (doit comporter 64 caractères hexadécimaux)",
+    "invalidUrl": "Format d'URL invalide",
+    "invalidUrlProtocol": "L'URL doit commencer par http:// ou https://"
   },
   "wizard": {
     "welcome": {
@@ -154,7 +168,10 @@
         "step2": "Localisez la section Politique CORS.",
         "step3": "Copiez la configuration JSON ci-dessous.",
         "step4": "Collez-la dans l'éditeur de Politique CORS et enregistrez."
-      }
+      },
+      "jsonLabel": "JSON de configuration CORS",
+      "copy": "Copier",
+      "pasteHint": "Collez ceci dans les paramètres de politique CORS de votre bucket R2."
     },
     "completion": {
       "title": "Tout est prêt !",

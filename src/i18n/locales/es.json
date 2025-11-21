@@ -105,7 +105,21 @@
     "saving": "Guardando...",
     "requiredFields": "Por favor completa todos los campos requeridos",
     "saveSuccess": "¡Configuración guardada exitosamente!",
-    "saveError": "Error al guardar la configuración"
+    "saveError": "Error al guardar la configuración",
+    "clearData": "Borrar todos los datos",
+    "clearDataConfirm": "¿Estás seguro de que quieres borrar todos los datos? Esta acción no se puede deshacer.",
+    "clearDataSuccess": "Todos los datos borrados exitosamente"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "invalidAccountId": "ID de cuenta inválido (debe tener 32 caracteres hexadecimales)",
+    "bucketNameLength": "El nombre del bucket debe tener entre 3 y 63 caracteres",
+    "bucketNameChars": "Solo se permiten letras minúsculas, números y guiones",
+    "bucketNameHyphen": "El nombre del bucket no puede comenzar ni terminar con un guion",
+    "invalidAccessKeyId": "ID de clave de acceso inválido (debe tener 32 caracteres hexadecimales)",
+    "invalidSecretAccessKey": "Clave de acceso secreta inválida (debe tener 64 caracteres hexadecimales)",
+    "invalidUrl": "Formato de URL inválido",
+    "invalidUrlProtocol": "La URL debe comenzar con http:// o https://"
   },
   "wizard": {
     "welcome": {
@@ -154,7 +168,10 @@
         "step2": "Localice la sección de Política CORS.",
         "step3": "Copie la configuración JSON a continuación.",
         "step4": "Péguela en el editor de Política CORS y guarde."
-      }
+      },
+      "jsonLabel": "JSON de configuración CORS",
+      "copy": "Copiar",
+      "pasteHint": "Pega esto en la configuración de la política CORS de tu bucket R2."
     },
     "completion": {
       "title": "¡Todo listo!",

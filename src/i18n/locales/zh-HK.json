@@ -105,7 +105,21 @@
     "saving": "正在儲存...",
     "requiredFields": "請填寫所有必填欄位",
     "saveSuccess": "設定已成功儲存！",
-    "saveError": "儲存設定失敗"
+    "saveError": "儲存設定失敗",
+    "clearData": "清除所有資料",
+    "clearDataConfirm": "您確定要清除所有資料嗎？此操作無法復原。",
+    "clearDataSuccess": "所有資料已成功清除"
+  },
+  "validation": {
+    "required": "此欄位為必填項",
+    "invalidAccountId": "無效的帳戶 ID（必須是 32 位十六進位字元）",
+    "bucketNameLength": "儲存桶名稱必須在 3 到 63 個字元之間",
+    "bucketNameChars": "僅允許小寫字母、數字和連字號",
+    "bucketNameHyphen": "儲存桶名稱不能以連字號開頭或結尾",
+    "invalidAccessKeyId": "無效的存取金鑰 ID（必須是 32 位十六進位字元）",
+    "invalidSecretAccessKey": "無效的秘密存取金鑰（必須是 64 位十六進位字元）",
+    "invalidUrl": "無效的 URL 格式",
+    "invalidUrlProtocol": "URL 必須以 http:// 或 https:// 開頭"
   },
   "wizard": {
     "welcome": {
@@ -154,7 +168,10 @@
         "step2": "找到 CORS 原則部分。",
         "step3": "複製下方的 JSON 設定。",
         "step4": "將其貼上到 CORS 原則編輯器中並儲存。"
-      }
+      },
+      "jsonLabel": "CORS 配置 JSON",
+      "copy": "複製",
+      "pasteHint": "將其貼上到您的 R2 儲存桶的 CORS 原則設定中。"
     },
     "completion": {
       "title": "設定完成！",

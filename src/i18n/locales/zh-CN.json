@@ -105,7 +105,21 @@
     "saving": "正在保存...",
     "requiredFields": "请填写所有必填字段",
     "saveSuccess": "设置已成功保存！",
-    "saveError": "保存设置失败"
+    "saveError": "保存设置失败",
+    "clearData": "清除所有数据",
+    "clearDataConfirm": "您确定要清除所有数据吗？此操作无法撤销。",
+    "clearDataSuccess": "所有数据已成功清除"
+  },
+  "validation": {
+    "required": "此字段为必填项",
+    "invalidAccountId": "无效的账户 ID（必须是 32 位十六进制字符）",
+    "bucketNameLength": "存储桶名称必须在 3 到 63 个字符之间",
+    "bucketNameChars": "仅允许小写字母、数字和连字符",
+    "bucketNameHyphen": "存储桶名称不能以连字符开头或结尾",
+    "invalidAccessKeyId": "无效的访问密钥 ID（必须是 32 位十六进制字符）",
+    "invalidSecretAccessKey": "无效的秘密访问密钥（必须是 64 位十六进制字符）",
+    "invalidUrl": "无效的 URL 格式",
+    "invalidUrlProtocol": "URL 必须以 http:// 或 https:// 开头"
   },
   "wizard": {
     "welcome": {
@@ -154,7 +168,10 @@
         "step2": "找到 CORS 策略部分。",
         "step3": "复制下方的 JSON 配置。",
         "step4": "将其粘贴到 CORS 策略编辑器中并保存。"
-      }
+      },
+      "jsonLabel": "CORS 配置 JSON",
+      "copy": "复制",
+      "pasteHint": "将其粘贴到您的 R2 存储桶的 CORS 策略设置中。"
     },
     "completion": {
       "title": "设置完成！",

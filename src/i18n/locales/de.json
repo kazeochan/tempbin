@@ -103,7 +103,21 @@
     "saving": "Wird gespeichert...",
     "requiredFields": "Bitte füllen Sie alle Pflichtfelder aus",
     "saveSuccess": "Einstellungen erfolgreich gespeichert!",
-    "saveError": "Fehler beim Speichern der Einstellungen"
+    "saveError": "Fehler beim Speichern der Einstellungen",
+    "clearData": "Alle Daten löschen",
+    "clearDataConfirm": "Sind Sie sicher, dass Sie alle Daten löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "clearDataSuccess": "Alle Daten erfolgreich gelöscht"
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalidAccountId": "Ungültige Konto-ID (muss 32 Hex-Zeichen lang sein)",
+    "bucketNameLength": "Bucket-Name muss zwischen 3 und 63 Zeichen lang sein",
+    "bucketNameChars": "Nur Kleinbuchstaben, Zahlen und Bindestriche erlaubt",
+    "bucketNameHyphen": "Bucket-Name darf nicht mit einem Bindestrich beginnen oder enden",
+    "invalidAccessKeyId": "Ungültige Zugriffsschlüssel-ID (muss 32 Hex-Zeichen lang sein)",
+    "invalidSecretAccessKey": "Ungültiger geheimer Zugriffsschlüssel (muss 64 Hex-Zeichen lang sein)",
+    "invalidUrl": "Ungültiges URL-Format",
+    "invalidUrlProtocol": "URL muss mit http:// oder https:// beginnen"
   },
   "wizard": {
     "welcome": {
@@ -152,7 +166,10 @@
         "step2": "Suchen Sie den Abschnitt CORS-Richtlinie.",
         "step3": "Kopieren Sie die untenstehende JSON-Konfiguration.",
         "step4": "Fügen Sie sie in den CORS-Richtlinien-Editor ein und speichern Sie."
-      }
+      },
+      "jsonLabel": "CORS-Konfigurations-JSON",
+      "copy": "Kopieren",
+      "pasteHint": "Fügen Sie dies in die CORS-Richtlinieneinstellungen Ihres R2-Buckets ein."
     },
     "completion": {
       "title": "Alles bereit!",

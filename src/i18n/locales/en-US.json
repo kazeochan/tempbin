@@ -168,7 +168,10 @@
         "step2": "Locate the CORS Policy section.",
         "step3": "Copy the JSON configuration below.",
         "step4": "Paste it into the CORS Policy editor and save."
-      }
+      },
+      "jsonLabel": "CORS Configuration JSON",
+      "copy": "Copy",
+      "pasteHint": "Paste this into your R2 bucket's CORS policy settings."
     },
     "completion": {
       "title": "All Set!",
