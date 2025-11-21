@@ -192,6 +192,7 @@
   },
   "notifications": {
     "uploadSuccess": "File uploaded successfully!",
+    "uploadMultiSuccess": "{{count}} file(s) uploaded successfully!",
     "uploadError": "Failed to upload file. Please check your R2 settings.",
     "deleteSuccess": "File deleted successfully!",
     "deleteError": "Failed to delete file.",

@@ -180,8 +180,17 @@
     "back": "戻る",
     "skip": "スキップ"
   },
+  "paste": {
+    "title": "アップロード確認",
+    "fileName": "名前",
+    "fileSize": "サイズ",
+    "fileType": "タイプ",
+    "cancel": "キャンセル",
+    "upload": "アップロード"
+  },
   "notifications": {
     "uploadSuccess": "ファイルが正常にアップロードされました！",
+    "uploadMultiSuccess": "{{count}}個のファイルが正常にアップロードされました！",
     "uploadError": "ファイルのアップロードに失敗しました。R2設定を確認してください。",
     "deleteSuccess": "ファイルが正常に削除されました！",
     "deleteError": "ファイルの削除に失敗しました。",

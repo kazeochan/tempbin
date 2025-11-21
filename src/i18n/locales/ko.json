@@ -180,8 +180,17 @@
     "back": "뒤로",
     "skip": "건너뛰기"
   },
+  "paste": {
+    "title": "업로드 확인",
+    "fileName": "이름",
+    "fileSize": "크기",
+    "fileType": "유형",
+    "cancel": "취소",
+    "upload": "업로드"
+  },
   "notifications": {
     "uploadSuccess": "파일이 성공적으로 업로드되었습니다!",
+    "uploadMultiSuccess": "{{count}}개의 파일이 성공적으로 업로드되었습니다!",
     "uploadError": "파일 업로드 실패. R2 설정을 확인하세요.",
     "deleteSuccess": "파일이 성공적으로 삭제되었습니다!",
     "deleteError": "파일 삭제 실패.",

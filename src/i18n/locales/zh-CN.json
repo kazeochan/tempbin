@@ -182,8 +182,17 @@
     "back": "返回",
     "skip": "跳过"
   },
+  "paste": {
+    "title": "确认上传",
+    "fileName": "名称",
+    "fileSize": "大小",
+    "fileType": "类型",
+    "cancel": "取消",
+    "upload": "上传"
+  },
   "notifications": {
     "uploadSuccess": "文件上传成功！",
+    "uploadMultiSuccess": "已成功上传 {{count}} 个文件！",
     "uploadError": "上传文件失败。请检查您的 R2 设置。",
     "deleteSuccess": "文件删除成功！",
     "deleteError": "删除文件失败。",

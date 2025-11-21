@@ -1,24 +1,24 @@
 {
   "app": {
-    "title": "TempBin - 臨時文件分享",
-    "description": "使用自動過期連結分享臨時文件"
+    "title": "TempBin - 臨時檔案分享",
+    "description": "用自動過期嘅連結嚟分享臨時檔案"
   },
   "header": {
     "logo": "tempbin",
-    "github": "在 GitHub 上訪問 kazeochan（在新分頁開啟）",
+    "github": "去 GitHub 睇 kazeochan（新分頁開）",
     "settings": "設定",
-    "openSettings": "開啟設定",
+    "openSettings": "打開設定",
     "language": "語言",
-    "lightMode": "切換到亮色模式",
-    "darkMode": "切換到深色模式"
+    "lightMode": "轉去光亮模式",
+    "darkMode": "轉去深色模式"
   },
   "hero": {
-    "title": "臨時分享文件",
-    "subtitle": "上傳文件並獲得會在 {{minutes}} 分鐘後自動過期的分享連結",
-    "subtitle_plural": "上傳文件並獲得會在 {{minutes}} 分鐘後自動過期的分享連結"
+    "title": "臨時分享檔案",
+    "subtitle": "上傳檔案，攞個會喺 {{minutes}} 分鐘後自動過期嘅分享連結",
+    "subtitle_plural": "上傳檔案，攞個會喺 {{minutes}} 分鐘後自動過期嘅分享連結"
   },
   "expiration": {
-    "label": "檔案將在以下時間後過期：",
+    "label": "檔案會喺咁長時間後過期：",
     "minutes": "{{count}} 分鐘",
     "minutes_plural": "{{count}} 分鐘",
     "min1": "1 分鐘",
@@ -26,172 +26,181 @@
     "min10": "10 分鐘"
   },
   "hashFilename": {
-    "label": "雜湊檔案名稱",
-    "hint": "匿名化檔案名稱以提高私隱性",
-    "enabled": "檔案名稱將被雜湊處理",
-    "disabled": "將使用原始檔案名稱"
+    "label": "加密檔案名",
+    "hint": "將檔案名匿名化，保障私隱",
+    "enabled": "檔案名會被加密處理",
+    "disabled": "會用返原本嘅檔案名"
   },
   "upload": {
-    "title": "將文件拖放到此處",
-    "subtitle": "或點擊瀏覽",
-    "info": "文件會在 {{minutes}} 分鐘後自動過期",
-    "info_plural": "文件會在 {{minutes}} 分鐘後自動過期",
-    "uploading": "正在上傳...",
-    "ariaLabel": "上傳文件區域。點擊選擇文件或將文件拖放到此處"
+    "title": "拖檔案入嚟呢度",
+    "subtitle": "或者撳嚟揀檔案",
+    "info": "檔案會喺 {{minutes}} 分鐘後自動過期",
+    "info_plural": "檔案會喺 {{minutes}} 分鐘後自動過期",
+    "uploading": "上緊傳...",
+    "ariaLabel": "上傳檔案區域。撳嚟揀檔案或者將檔案拖入嚟"
   },
   "fileList": {
     "title": "檔案",
     "deleteSelected": "刪除 ({{count}})",
-    "deleteSelectedAria": "刪除 {{count}} 個已選檔案",
-    "copyAllLinks": "複製所有連結",
-    "copyAllLinksAria": "複製所有檔案連結到剪貼簿",
-    "selectAllAria": "選擇所有檔案",
-    "selectFileAria": "選擇 {{name}}",
-    "name": "名稱",
-    "size": "大小",
-    "expires": "到期時間",
+    "deleteSelectedAria": "刪除 {{count}} 個揀咗嘅檔案",
+    "copyAllLinks": "抄晒所有連結",
+    "copyAllLinksAria": "將所有檔案連結抄入去剪貼簿",
+    "selectAllAria": "揀晒所有檔案",
+    "selectFileAria": "揀 {{name}}",
+    "name": "名",
+    "size": "大細",
+    "expires": "過期時間",
     "actions": "操作",
-    "expired": "已過期",
+    "expired": "過咗期",
     "copied": "✓",
-    "copiedAll": "已複製！",
-    "deleteConfirm": "刪除 {{count}} 個已選檔案？",
-    "copyLinkTitle": "複製連結",
-    "copyLinkAria": "複製 {{name}} 的連結",
-    "openFileTitle": "開啟檔案",
-    "openFileAria": "開啟 {{name}}",
+    "copiedAll": "抄咗！",
+    "deleteConfirm": "刪除 {{count}} 個揀咗嘅檔案？",
+    "copyLinkTitle": "抄連結",
+    "copyLinkAria": "抄 {{name}} 嘅連結",
+    "openFileTitle": "開檔案",
+    "openFileAria": "開 {{name}}",
     "deleteFileTitle": "刪除檔案",
     "deleteFileAria": "刪除 {{name}}"
   },
   "fileCard": {
-    "delete": "刪除文件",
-    "copyLink": "複製連結",
-    "copied": "已複製！",
-    "open": "開啟"
+    "delete": "刪除檔案",
+    "copyLink": "抄連結",
+    "copied": "抄咗！",
+    "open": "打開"
   },
   "empty": {
-    "title": "尚未上傳文件",
-    "subtitle": "上傳您的第一個文件以開始使用"
+    "title": "未上傳過檔案",
+    "subtitle": "上傳你第一個檔案嚟開始用"
   },
   "settings": {
     "title": "設定",
-    "closeAria": "關閉設定",
+    "closeAria": "閂設定",
     "r2Title": "Cloudflare R2",
-    "infoTitle": "配置您的 Cloudflare R2 儲存桶",
-    "infoDescription": "您需要從 Cloudflare 控制台獲取 R2 憑證。所有資料都儲存在您的瀏覽器本地。",
+    "infoTitle": "設定你嘅 Cloudflare R2 儲存桶",
+    "infoDescription": "你需要喺 Cloudflare 控制台攞 R2 憑證。所有資料都儲存喺你瀏覽器入面。",
     "accountId": "帳戶 ID",
-    "accountIdPlaceholder": "您的 Cloudflare 帳戶 ID",
-    "bucketName": "儲存桶名稱",
+    "accountIdPlaceholder": "你嘅 Cloudflare 帳戶 ID",
+    "bucketName": "儲存桶名",
     "bucketNamePlaceholder": "my-bucket",
-    "accessKeyId": "存取金鑰 ID",
-    "accessKeyIdPlaceholder": "您的 R2 存取金鑰 ID",
-    "secretAccessKey": "秘密存取金鑰",
-    "secretAccessKeyPlaceholder": "您的 R2 秘密存取金鑰",
-    "publicUrl": "公開 URL（選填）",
+    "accessKeyId": "存取密鑰 ID",
+    "accessKeyIdPlaceholder": "你嘅 R2 存取密鑰 ID",
+    "secretAccessKey": "私密存取密鑰",
+    "secretAccessKeyPlaceholder": "你嘅 R2 私密存取密鑰",
+    "publicUrl": "公開網址（可選）",
     "publicUrlPlaceholder": "https://your-domain.com",
-    "publicUrlHint": "用於公開文件存取的自訂網域",
+    "publicUrlHint": "用嚟公開檔案存取嘅自訂網域",
     "appearance": "外觀",
     "themeMode": "主題模式",
-    "themeModeHint": "在亮色和深色主題之間選擇",
-    "light": "亮色",
+    "themeModeHint": "揀光亮定深色主題",
+    "light": "光亮",
     "dark": "深色",
-    "lightMode": "亮色模式",
+    "lightMode": "光亮模式",
     "darkMode": "深色模式",
-    "highContrast": "高對比度",
-    "highContrastHint": "提高對比度以獲得更好的可見性",
+    "highContrast": "高對比",
+    "highContrastHint": "提高對比度，睇得清楚啲",
     "language": "語言",
-    "languageHint": "選擇您的首選語言",
+    "languageHint": "揀你想用嘅語言",
     "cancel": "取消",
     "save": "儲存設定",
-    "saving": "正在儲存...",
-    "requiredFields": "請填寫所有必填欄位",
-    "saveSuccess": "設定已成功儲存！",
+    "saving": "儲存緊...",
+    "requiredFields": "請填晒所有必填欄位",
+    "saveSuccess": "設定儲存咗！",
     "saveError": "儲存設定失敗",
-    "clearData": "清除所有資料",
-    "clearDataConfirm": "您確定要清除所有資料嗎？此操作無法復原。",
-    "clearDataSuccess": "所有資料已成功清除"
+    "clearData": "清除晒所有資料",
+    "clearDataConfirm": "你確定要清晒所有資料？呢個動作做咗就唔可以復原㗎。",
+    "clearDataSuccess": "所有資料已經清咗"
   },
   "validation": {
-    "required": "此欄位為必填項",
-    "invalidAccountId": "無效的帳戶 ID（必須是 32 位十六進位字元）",
-    "bucketNameLength": "儲存桶名稱必須在 3 到 63 個字元之間",
-    "bucketNameChars": "僅允許小寫字母、數字和連字號",
-    "bucketNameHyphen": "儲存桶名稱不能以連字號開頭或結尾",
-    "invalidAccessKeyId": "無效的存取金鑰 ID（必須是 32 位十六進位字元）",
-    "invalidSecretAccessKey": "無效的秘密存取金鑰（必須是 64 位十六進位字元）",
-    "invalidUrl": "無效的 URL 格式",
-    "invalidUrlProtocol": "URL 必須以 http:// 或 https:// 開頭"
+    "required": "呢個欄位要填",
+    "invalidAccountId": "帳戶 ID 唔啱（要係 32 個十六進位字元）",
+    "bucketNameLength": "儲存桶名要 3 至 63 個字元",
+    "bucketNameChars": "只可以用細楷字母、數字同連字號",
+    "bucketNameHyphen": "儲存桶名唔可以用連字號開頭或結尾",
+    "invalidAccessKeyId": "存取密鑰 ID 唔啱（要係 32 個十六進位字元）",
+    "invalidSecretAccessKey": "私密存取密鑰唔啱（要係 64 個十六進位字元）",
+    "invalidUrl": "網址格式唔啱",
+    "invalidUrlProtocol": "網址要用 http:// 或 https:// 開頭"
   },
   "wizard": {
     "welcome": {
-      "title": "歡迎使用 TempBin",
-      "subtitle": "讓我們設定您的 Cloudflare R2 儲存空間。",
+      "title": "歡迎用 TempBin",
+      "subtitle": "嚟，我哋一齊設定你嘅 Cloudflare R2 儲存空間。",
       "start": "開始"
     },
     "step1": {
-      "title": "帳戶與儲存體",
-      "description": "輸入您的 Cloudflare 帳戶 ID 和您想要使用的 R2 儲存體名稱。",
+      "title": "帳戶同儲存桶",
+      "description": "入你嘅 Cloudflare 帳戶 ID 同埋你想用嘅 R2 儲存桶名。",
       "instructions": {
-        "title": "如何找到這些資訊？",
-        "step1": "登入您的 Cloudflare 控制台。",
-        "step2": "從側邊欄導航到 R2。",
-        "step3": "您的帳戶 ID 顯示在 R2 概覽頁面的右側。",
-        "step4": "建立一個新儲存體或使用現有儲存體並複製其名稱。"
+        "title": "點樣搵呢啲資料？",
+        "step1": "登入你嘅 Cloudflare 控制台。",
+        "step2": "喺側邊欄揀 R2。",
+        "step3": "你嘅帳戶 ID 會顯示喺 R2 概覽版面嘅右邊。",
+        "step4": "整個新儲存桶或者用返現有嘅，抄低佢個名。"
       }
     },
     "step2": {
       "title": "憑證",
-      "description": "輸入您的 R2 存取金鑰 ID 和秘密存取金鑰。",
+      "description": "入你嘅 R2 存取密鑰 ID 同私密存取密鑰。",
       "instructions": {
-        "title": "如何產生金鑰？",
-        "step1": "在 R2 控制台中，點擊右側的「管理 R2 API 權杖」。",
-        "step2": "點擊「建立 API 權杖」。",
-        "step3": "選擇「物件讀寫」權限。",
-        "step4": "建立權杖並複製存取金鑰 ID 和秘密存取金鑰。"
+        "title": "點樣生成密鑰？",
+        "step1": "喺 R2 控制台入面，撳右邊嘅「管理 R2 API 權杖」。",
+        "step2": "撳「建立 API 權杖」。",
+        "step3": "揀「物件讀寫」權限。",
+        "step4": "建立權杖，然後抄低存取密鑰 ID 同私密存取密鑰。"
       }
     },
     "step3": {
       "title": "公開存取",
-      "description": "可選擇設定用於公開檔案存取的自訂網域。",
+      "description": "可以選擇設定自訂網域嚟公開檔案。",
       "instructions": {
         "title": "設定公開存取",
-        "step1": "前往 R2 儀表板中的儲存貯體設定。",
-        "step2": "在「公開存取」下，您可以連接自訂網域或允許透過 R2.dev 子網域進行公開存取。",
-        "step3": "在此處輸入完整 URL（例如 https://files.example.com）。"
+        "step1": "去 R2 控制台入面嘅儲存桶設定。",
+        "step2": "喺「公開存取」下面，你可以連接自訂網域，或者開放用 R2.dev 子網域嚟公開存取。",
+        "step3": "喺呢度入完整網址（例如 https://files.example.com）。"
       }
     },
     "step4": {
       "title": "CORS 設定",
-      "description": "設定跨來源資源共用 (CORS) 以允許從本網站上傳。",
+      "description": "設定跨來源資源共用 (CORS) 嚟允許喺呢個網站上傳。",
       "instructions": {
         "title": "設定 CORS",
-        "step1": "前往 R2 儀表板中的儲存貯體設定。",
-        "step2": "找到 CORS 原則部分。",
-        "step3": "複製下方的 JSON 設定。",
-        "step4": "將其貼上到 CORS 原則編輯器中並儲存。"
+        "step1": "去 R2 控制台入面嘅儲存桶設定。",
+        "step2": "搵 CORS 原則部分。",
+        "step3": "抄低下面嘅 JSON 設定。",
+        "step4": "貼入去 CORS 原則編輯器，然後儲存。"
       },
-      "jsonLabel": "CORS 配置 JSON",
-      "copy": "複製",
-      "pasteHint": "將其貼上到您的 R2 儲存桶的 CORS 原則設定中。"
+      "jsonLabel": "CORS 設定 JSON",
+      "copy": "抄",
+      "pasteHint": "貼呢個入去你 R2 儲存桶嘅 CORS 原則設定。"
     },
     "completion": {
-      "title": "設定完成！",
-      "subtitle": "您的 R2 儲存空間已配置並準備就緒。",
+      "title": "搞掂晒！",
+      "subtitle": "你嘅 R2 儲存空間已經設定好，可以用喇。",
       "finish": "開始分享"
     },
     "next": "下一步",
-    "back": "返回",
+    "back": "返轉頭",
     "skip": "跳過"
   },
+  "paste": {
+    "title": "確認上傳",
+    "fileName": "檔名",
+    "fileSize": "大細",
+    "fileType": "類型",
+    "cancel": "取消",
+    "upload": "上傳"
+  },
   "notifications": {
-    "uploadSuccess": "文件上傳成功！",
-    "uploadError": "上傳文件失敗。請檢查您的 R2 設定。",
-    "deleteSuccess": "文件刪除成功！",
-    "deleteError": "刪除文件失敗。",
-    "deleteMultiSuccess": "已成功刪除 {{count}} 個文件！",
-    "deleteMultiError": "刪除文件失敗。"
+    "uploadSuccess": "檔案上傳咗！",
+    "uploadMultiSuccess": "已經上傳咗 {{count}} 個檔案！",
+    "uploadError": "上傳檔案失敗。檢查下你嘅 R2 設定。",
+    "deleteSuccess": "檔案刪咗！",
+    "deleteError": "刪除檔案失敗。",
+    "deleteMultiSuccess": "已經刪咗 {{count}} 個檔案！",
+    "deleteMultiError": "刪除檔案失敗。"
   },
   "accessibility": {
-    "skipToMain": "跳至主要內容",
-    "mainContent": "文件分享應用程式"
+    "skipToMain": "跳去主要內容",
+    "mainContent": "檔案分享應用程式"
   }
 }

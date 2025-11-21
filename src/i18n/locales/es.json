@@ -182,8 +182,17 @@
     "back": "Atrás",
     "skip": "Omitir"
   },
+  "paste": {
+    "title": "Confirmar Carga",
+    "fileName": "Nombre",
+    "fileSize": "Tamaño",
+    "fileType": "Tipo",
+    "cancel": "Cancelar",
+    "upload": "Subir"
+  },
   "notifications": {
     "uploadSuccess": "¡Archivo subido exitosamente!",
+    "uploadMultiSuccess": "¡{{count}} archivo(s) subido(s) exitosamente!",
     "uploadError": "Error al subir el archivo. Por favor verifica tu configuración de R2.",
     "deleteSuccess": "¡Archivo eliminado exitosamente!",
     "deleteError": "Error al eliminar el archivo.",

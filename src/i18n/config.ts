@@ -24,6 +24,8 @@ i18n
       'de': { translation: de },
       'zh-HK': { translation: zhHK },
       'zh-CN': { translation: zhCN },
+      'zh-TW': { translation: zhCN },
+      'zh': { translation: zhCN },
       'ja': { translation: ja },
       'ko': { translation: ko },
     },

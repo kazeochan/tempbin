@@ -182,8 +182,17 @@
     "back": "Retour",
     "skip": "Passer"
   },
+  "paste": {
+    "title": "Confirmer le Téléchargement",
+    "fileName": "Nom",
+    "fileSize": "Taille",
+    "fileType": "Type",
+    "cancel": "Annuler",
+    "upload": "Télécharger"
+  },
   "notifications": {
     "uploadSuccess": "Fichier téléchargé avec succès !",
+    "uploadMultiSuccess": "{{count}} fichier(s) téléchargé(s) avec succès !",
     "uploadError": "Échec du téléchargement du fichier. Veuillez vérifier vos paramètres R2.",
     "deleteSuccess": "Fichier supprimé avec succès !",
     "deleteError": "Échec de la suppression du fichier.",
