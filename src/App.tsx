@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import './App.css';
 import UploadZone from './components/UploadZone/UploadZone';
 import FileList from './components/FileList/FileList';
@@ -329,8 +330,9 @@ function App() {
 
   return (
     <div className={`app theme-${theme} ${highContrast ? 'high-contrast' : ''} ${reducedMotion ? 'reduced-motion' : ''}`}>
+      <SpeedInsights />
       <Header 
-        onSettingsClick={() => setShowSettings(true)} 
+        onSettingsClick={() => setShowSettings(true)}  
         theme={theme}
         onThemeToggle={toggleTheme}
         showSettingsButton={!showWizard}
