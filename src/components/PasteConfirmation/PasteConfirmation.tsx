@@ -6,12 +6,12 @@ import './PasteConfirmation.css';
 import FileIcon from '../FileIcon/FileIcon';
 
 interface PasteConfirmationProps {
-  file: File;
+  files: File[];
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-const PasteConfirmation: React.FC<PasteConfirmationProps> = ({ file, onConfirm, onCancel }) => {
+const PasteConfirmation: React.FC<PasteConfirmationProps> = ({ files, onConfirm, onCancel }) => {
   const { t } = useTranslation();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [previewText, setPreviewText] = useState<string | null>(null);
@@ -21,20 +21,24 @@ const PasteConfirmation: React.FC<PasteConfirmationProps> = ({ file, onConfirm, 
                      (!document.documentElement.classList.contains('theme-light') && 
                       window.matchMedia('(prefers-color-scheme: dark)').matches);
 
+  const singleFile = files.length === 1 ? files[0] : null;
+
   useEffect(() => {
-    if (file.type.startsWith('image/')) {
-      const url = URL.createObjectURL(file);
+    if (!singleFile) return;
+
+    if (singleFile.type.startsWith('image/')) {
+      const url = URL.createObjectURL(singleFile);
       setPreviewUrl(url);
       return () => URL.revokeObjectURL(url);
     } else if (
-      file.type.startsWith('text/') || 
-      file.type === 'application/json' ||
-      file.type === 'application/javascript' ||
-      file.type === 'application/xml' ||
-      /\.(txt|md|json|js|jsx|ts|tsx|css|html|xml|yml|yaml|py|rb|java|c|cpp|h|cs|go|rs|php|sh|bat|ps1)$/i.test(file.name)
+      singleFile.type.startsWith('text/') || 
+      singleFile.type === 'application/json' ||
+      singleFile.type === 'application/javascript' ||
+      singleFile.type === 'application/xml' ||
+      /\.(txt|md|json|js|jsx|ts|tsx|css|html|xml|yml|yaml|py|rb|java|c|cpp|h|cs|go|rs|php|sh|bat|ps1)$/i.test(singleFile.name)
     ) {
       // Detect language
-      const ext = file.name.split('.').pop()?.toLowerCase();
+      const ext = singleFile.name.split('.').pop()?.toLowerCase();
       let lang = 'text';
       if (ext) {
         const langMap: Record<string, string> = {
@@ -53,9 +57,9 @@ const PasteConfirmation: React.FC<PasteConfirmationProps> = ({ file, onConfirm, 
         const text = e.target?.result as string;
         setPreviewText(text.slice(0, 2000) + (text.length > 2000 ? '\n... (truncated)' : ''));
       };
-      reader.readAsText(file.slice(0, 2000));
+      reader.readAsText(singleFile.slice(0, 2000));
     }
-  }, [file]);
+  }, [singleFile]);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -94,7 +98,11 @@ const PasteConfirmation: React.FC<PasteConfirmationProps> = ({ file, onConfirm, 
         aria-labelledby="paste-dialog-title"
       >
         <div className="paste-header">
-          <h2 className="paste-title" id="paste-dialog-title">{t('paste.title', 'Confirm Upload')}</h2>
+          <h2 className="paste-title" id="paste-dialog-title">
+            {files.length > 1 
+              ? t('paste.titleMulti', { count: files.length, defaultValue: 'Confirm Upload ({{count}} files)' }) 
+              : t('paste.title', 'Confirm Upload')}
+          </h2>
           <button 
             className="close-button" 
             onClick={handleClose} 
@@ -108,49 +116,72 @@ const PasteConfirmation: React.FC<PasteConfirmationProps> = ({ file, onConfirm, 
         </div>
 
         <div className="paste-content">
-          <div className="file-preview-container">
-            {previewUrl ? (
-              <img src={previewUrl} alt="Preview" className="file-preview-image" />
-            ) : previewText ? (
-              <div className="code-preview-wrapper">
-                <div className="code-language-label">{language}</div>
-                <SyntaxHighlighter
-                  language={language}
-                  style={isDarkMode ? vscDarkPlus : vs}
-                  customStyle={{
-                    margin: 0,
-                    padding: '1rem',
-                    borderRadius: '4px',
-                    fontSize: '0.85rem',
-                    maxHeight: '300px',
-                    backgroundColor: 'var(--bg-secondary)',
-                    border: '1px solid var(--border-color)',
-                  }}
-                >
-                  {previewText}
-                </SyntaxHighlighter>
+          {singleFile ? (
+            <>
+              <div className="file-preview-container">
+                {previewUrl ? (
+                  <img src={previewUrl} alt="Preview" className="file-preview-image" />
+                ) : previewText ? (
+                  <div className="code-preview-wrapper">
+                    <div className="code-language-label">{language}</div>
+                    <SyntaxHighlighter
+                      language={language}
+                      style={isDarkMode ? vscDarkPlus : vs}
+                      customStyle={{
+                        margin: 0,
+                        padding: '1rem',
+                        borderRadius: '4px',
+                        fontSize: '0.85rem',
+                        maxHeight: '300px',
+                        backgroundColor: 'var(--bg-secondary)',
+                        border: '1px solid var(--border-color)',
+                      }}
+                    >
+                      {previewText}
+                    </SyntaxHighlighter>
+                  </div>
+                ) : (
+                  <div className="file-preview-icon">
+                    <FileIcon fileName={singleFile.name} />
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="file-preview-icon">
-                <FileIcon fileName={file.name} />
-              </div>
-            )}
-          </div>
 
-          <div className="file-details">
-            <div className="detail-row">
-              <span className="detail-label">{t('paste.fileName', 'Name')}:</span>
-              <span className="detail-value">{file.name}</span>
+              <div className="file-details">
+                <div className="detail-row">
+                  <span className="detail-label">{t('paste.fileName', 'Name')}:</span>
+                  <span className="detail-value">{singleFile.name}</span>
+                </div>
+                <div className="detail-row">
+                  <span className="detail-label">{t('paste.fileSize', 'Size')}:</span>
+                  <span className="detail-value">{formatFileSize(singleFile.size)}</span>
+                </div>
+                <div className="detail-row">
+                  <span className="detail-label">{t('paste.fileType', 'Type')}:</span>
+                  <span className="detail-value">{singleFile.type || 'Unknown'}</span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="multi-file-preview">
+              <div className="file-list-preview">
+                {files.map((f, i) => (
+                  <div key={i} className="file-preview-item">
+                    <div className="file-preview-item-icon">
+                      <FileIcon fileName={f.name} />
+                    </div>
+                    <div className="file-preview-item-details">
+                      <div className="file-preview-item-name">{f.name}</div>
+                      <div className="file-preview-item-size">{formatFileSize(f.size)}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="total-size">
+                {t('paste.totalSize', 'Total Size')}: {formatFileSize(files.reduce((acc, f) => acc + f.size, 0))}
+              </div>
             </div>
-            <div className="detail-row">
-              <span className="detail-label">{t('paste.fileSize', 'Size')}:</span>
-              <span className="detail-value">{formatFileSize(file.size)}</span>
-            </div>
-            <div className="detail-row">
-              <span className="detail-label">{t('paste.fileType', 'Type')}:</span>
-              <span className="detail-value">{file.type || 'Unknown'}</span>
-            </div>
-          </div>
+          )}
 
           <div className="paste-actions">
             <button className="button secondary" onClick={handleClose} type="button">

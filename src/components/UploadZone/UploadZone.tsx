@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import './UploadZone.css';
 
 interface UploadZoneProps {
-  onFileUpload: (file: File) => void;
+  onFileUpload: (files: File[]) => void;
   isUploading: boolean;
   expirationMinutes: number;
 }
@@ -56,14 +56,14 @@ const UploadZone: React.FC<UploadZoneProps> = ({ onFileUpload, isUploading, expi
     
     const files = Array.from(e.dataTransfer.files);
     if (files.length > 0) {
-      onFileUpload(files[0]);
+      onFileUpload(files);
     }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      onFileUpload(files[0]);
+      onFileUpload(Array.from(files));
     }
   };
 
@@ -108,6 +108,7 @@ const UploadZone: React.FC<UploadZoneProps> = ({ onFileUpload, isUploading, expi
       <input
         ref={fileInputRef}
         type="file"
+        multiple
         onChange={handleFileSelect}
         style={{ display: 'none' }}
         aria-label="File upload input"

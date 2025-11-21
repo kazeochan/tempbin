@@ -17,7 +17,7 @@ function App() {
   const [isUploading, setIsUploading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
-  const [pastedFile, setPastedFile] = useState<File | null>(null);
+  const [pastedFiles, setPastedFiles] = useState<File[]>([]);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [notificationFadeOut, setNotificationFadeOut] = useState(false);
   const [fileListFadeOut, setFileListFadeOut] = useState(false);
@@ -68,12 +68,12 @@ function App() {
     
     // Handle paste events
     const handlePaste = (e: ClipboardEvent) => {
-      if (showSettings || showWizard || isUploading || pastedFile) return;
+      if (showSettings || showWizard || isUploading || pastedFiles.length > 0) return;
       
       if (e.clipboardData && e.clipboardData.files.length > 0) {
         e.preventDefault();
-        const file = e.clipboardData.files[0];
-        setPastedFile(file);
+        const files = Array.from(e.clipboardData.files);
+        setPastedFiles(files);
       }
     };
     window.addEventListener('paste', handlePaste);
@@ -84,7 +84,7 @@ function App() {
       window.removeEventListener('keydown', handleEscape);
       window.removeEventListener('paste', handlePaste);
     };
-  }, [showSettings, showWizard, isUploading, pastedFile]);
+  }, [showSettings, showWizard, isUploading, pastedFiles]);
 
   // Update document title when language changes
   useEffect(() => {
@@ -194,27 +194,39 @@ function App() {
     localStorage.setItem('hashFilenames', enabled.toString());
   };
 
-  const handleFileUpload = async (file: File) => {
+  const handleFileUpload = async (filesToUpload: File[]) => {
+    if (filesToUpload.length === 0) return;
+    
     setIsUploading(true);
     try {
-      const result = await uploadFileToR2(file, hashFilenames);
-      
+      const uploadedFiles: FileItem[] = [];
       const expirationMs = expirationMinutes * 60 * 1000;
       
-      const newFile: FileItem = {
-        id: result.fileId,
-        name: file.name,
-        size: file.size,
-        uploadedAt: Date.now(),
-        expiresAt: Date.now() + expirationMs,
-        url: result.url,
-      };
+      // Upload files sequentially to avoid overwhelming the network/browser
+      for (const file of filesToUpload) {
+        const result = await uploadFileToR2(file, hashFilenames);
+        
+        const newFile: FileItem = {
+          id: result.fileId,
+          name: file.name,
+          size: file.size,
+          uploadedAt: Date.now(),
+          expiresAt: Date.now() + expirationMs,
+          url: result.url,
+        };
+        
+        uploadedFiles.push(newFile);
+      }
 
-      const updatedFiles = [newFile, ...files];
+      const updatedFiles = [...uploadedFiles, ...files];
       setFiles(updatedFiles);
       await saveFiles(updatedFiles);
 
-      showNotification(t('notifications.uploadSuccess'), 'success');
+      if (filesToUpload.length === 1) {
+        showNotification(t('notifications.uploadSuccess'), 'success');
+      } else {
+        showNotification(t('notifications.uploadMultiSuccess', { count: filesToUpload.length }), 'success');
+      }
     } catch (error) {
       console.error('Upload error:', error);
       showNotification(t('notifications.uploadError'), 'error');
@@ -389,14 +401,14 @@ function App() {
         />
       )}
 
-      {pastedFile && (
+      {pastedFiles.length > 0 && (
         <PasteConfirmation
-          file={pastedFile}
+          files={pastedFiles}
           onConfirm={() => {
-            handleFileUpload(pastedFile);
-            setPastedFile(null);
+            handleFileUpload(pastedFiles);
+            setPastedFiles([]);
           }}
-          onCancel={() => setPastedFile(null)}
+          onCancel={() => setPastedFiles([])}
         />
       )}
 
