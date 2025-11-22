@@ -28,7 +28,7 @@ Since TempBin runs in the browser, you must configure CORS (Cross-Origin Resourc
 
 1.  Go to your Cloudflare Dashboard > R2 > Select your bucket.
 2.  Go to **Settings** > **CORS Policy**.
-3.  Add a policy like this (replace `http://localhost:5173` with your production domain when deploying):
+3.  Add a policy like this (replace `https://your-production-domain.com` with your production domain when deploying):
 
 ```json
 [
@@ -70,7 +70,7 @@ Since TempBin runs in the browser, you must configure CORS (Cross-Origin Resourc
 
 3.  Start the development server:
     ```bash
-    npm run dev
+    npm run dev -- --mode test
     ```
 
 4.  Open your browser at `http://localhost:5173`.
@@ -95,8 +95,9 @@ The project includes integration tests to verify R2 connectivity and functionali
     VITE_R2_BUCKET_NAME=your_test_bucket
     VITE_R2_PUBLIC_URL=https://your-optional-public-url.com
     ```
+2.  You may need to add `http://localhost:3000/` to `AllowedOrigins` of your CORS Policy.
 
-2.  Run the tests:
+3.  Run the tests:
     ```bash
     npm test
     ```
