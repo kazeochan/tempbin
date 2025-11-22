@@ -51,6 +51,22 @@
   <!-- Theme Color -->
   <meta name="theme-color" content="#000000" />
   
+  <script>
+    (function() {
+      try {
+        var localTheme = localStorage.getItem('theme');
+        var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+        if (localTheme === 'light' || (!localTheme && !supportDarkMode)) {
+          document.documentElement.classList.add('theme-light');
+          var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+          if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', '#f5f5f5');
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Canonical URL -->
   <link rel="canonical" href="https://tempbin.kazeo.xyz/" />
   
@@ -336,6 +352,38 @@
       .skeleton-cell:nth-child(4) {
         display: none;
       }
+    }
+
+    /* Light Theme Support */
+    html.theme-light,
+    html.theme-light body,
+    html.theme-light .main-skeleton {
+      background: #f5f5f5;
+    }
+
+    html.theme-light .skeleton-header-container,
+    html.theme-light .skeleton-controls,
+    html.theme-light .skeleton-upload-zone,
+    html.theme-light .skeleton-table {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    html.theme-light .skeleton-row {
+      border-bottom-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    html.theme-light .skeleton-upload-zone {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    html.theme-light .skeleton-shimmer {
+      background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0.05) 25%, 
+        rgba(0, 0, 0, 0.1) 37%, 
+        rgba(0, 0, 0, 0.05) 63%
+      );
+      background-size: 400% 100%;
     }
   </style>
 </head>
