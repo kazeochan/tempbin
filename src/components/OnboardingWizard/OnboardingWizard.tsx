@@ -117,6 +117,20 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
     }
   };
 
+  const handleDebugFill = () => {
+    const env = import.meta.env;
+    const debugConfig: Partial<R2Config> = {
+      accountId: env.VITE_R2_ACCOUNT_ID || '',
+      accessKeyId: env.VITE_R2_ACCESS_KEY_ID || '',
+      secretAccessKey: env.VITE_R2_SECRET_ACCESS_KEY || '',
+      bucketName: env.VITE_R2_BUCKET_NAME || '',
+      publicUrl: env.VITE_R2_PUBLIC_URL || '',
+    };
+    
+    setConfig(debugConfig);
+    setStep(5); // Jump to CORS step
+  };
+
   const renderStep0_Welcome = () => (
     <div className="wizard-step">
       <svg className="welcome-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -130,6 +144,15 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
         <button className="btn-primary" onClick={handleNext}>
           {t('wizard.welcome.start')}
         </button>
+        {import.meta.env.DEV && (
+          <button 
+            className="btn-secondary" 
+            onClick={handleDebugFill}
+            style={{ marginTop: '10px', fontSize: '0.8rem', opacity: 0.7 }}
+          >
+            Debug: Fill & Jump to CORS
+          </button>
+        )}
       </div>
     </div>
   );
