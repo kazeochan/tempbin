@@ -165,6 +165,16 @@
       }
     },
     "step4": {
+      "title": "Storage Limit",
+      "description": "Set a storage limit to help manage your R2 usage and costs.",
+      "instructions": {
+        "title": "About Storage Limits",
+        "step1": "Cloudflare R2 offers a generous free tier (10 GB/month).",
+        "step2": "Set a limit here to get warned before you exceed it.",
+        "step3": "This is a client-side check only and does not enforce limits on Cloudflare."
+      }
+    },
+    "step5": {
       "title": "Configuration CORS",
       "description": "Configurez le partage de ressources inter-origines (CORS) pour autoriser les téléchargements depuis ce site web.",
       "instructions": {

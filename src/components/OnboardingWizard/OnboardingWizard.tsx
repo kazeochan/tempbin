@@ -22,6 +22,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
   const { t } = useTranslation();
   const [step, setStep] = useState(0);
   const [config, setConfig] = useState<Partial<R2Config>>(initialConfig || {});
+  const [storageLimit, setStorageLimit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
@@ -108,6 +109,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
   const handleFinish = async () => {
     if (config.accountId && config.accessKeyId && config.secretAccessKey && config.bucketName) {
       await persistence.setItem('r2Config', JSON.stringify(config));
+      await persistence.setItem('storageLimit', storageLimit.toString());
       onComplete();
     }
   };
@@ -261,7 +263,45 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
     );
   };
 
-  const renderStep4_CORS = () => {
+  const renderStep4_StorageLimit = () => (
+    <div className="wizard-step">
+      <h2 className="wizard-title">{t('wizard.step4.title')}</h2>
+      <p className="wizard-description">{t('wizard.step4.description')}</p>
+      <div className="wizard-form">
+        <div className="form-group">
+          <label htmlFor="storageLimit">{t('settings.storageLimit')} (GB)</label>
+          <input
+            id="storageLimit"
+            type="number"
+            min="1"
+            value={storageLimit}
+            onChange={(e) => setStorageLimit(Math.max(1, parseInt(e.target.value, 10) || 0))}
+            className="storage-input"
+            style={{ 
+              width: '100%', 
+              padding: '0.75rem', 
+              background: 'var(--bg-secondary)', 
+              border: '1px solid var(--border-color)', 
+              borderRadius: '8px',
+              color: 'var(--text-primary)',
+              fontSize: '1rem'
+            }}
+          />
+          <small style={{ display: 'block', marginTop: '4px', color: 'var(--text-secondary)' }}>
+            {t('settings.storageLimitHint')}
+          </small>
+        </div>
+      </div>
+      <div className="wizard-actions">
+        <button className="btn-secondary" onClick={handleBack}>{t('wizard.back')}</button>
+        <button className="btn-primary" onClick={handleNext}>
+          {t('wizard.next')}
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderStep5_CORS = () => {
     const origin = window.location.origin;
     const corsConfig = [
       {
@@ -294,11 +334,11 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
 
     return (
       <div className="wizard-step">
-        <h2 className="wizard-title">{t('wizard.step4.title')}</h2>
-        <p className="wizard-description">{t('wizard.step4.description')}</p>
+        <h2 className="wizard-title">{t('wizard.step5.title')}</h2>
+        <p className="wizard-description">{t('wizard.step5.description')}</p>
         <div className="wizard-form">
           <div className="form-group">
-            <label>{t('wizard.step4.jsonLabel')}</label>
+            <label>{t('wizard.step5.jsonLabel')}</label>
             <div style={{ position: 'relative' }}>
               <SyntaxHighlighter
                 language="json"
@@ -331,11 +371,11 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
                 }}
                 onClick={copyToClipboard}
               >
-                {copied ? t('fileCard.copied') : t('wizard.step4.copy')}
+                {copied ? t('fileCard.copied') : t('wizard.step5.copy')}
               </button>
             </div>
             <small style={{ display: 'block', marginTop: '4px', color: 'var(--text-secondary)' }}>
-              {t('wizard.step4.pasteHint')}
+              {t('wizard.step5.pasteHint')}
             </small>
           </div>
         </div>
@@ -349,7 +389,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
     );
   };
 
-  const renderStep5_Completion = () => (
+  const renderStep6_Completion = () => (
     <div className="wizard-step">
       <svg className="completion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -370,12 +410,13 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
     renderStep1_Account,
     renderStep2_Credentials,
     renderStep3_PublicUrl,
-    renderStep4_CORS,
-    renderStep5_Completion
+    renderStep4_StorageLimit,
+    renderStep5_CORS,
+    renderStep6_Completion
   ];
 
   const renderInstructions = () => {
-    if (step === 0 || step === 5) return null;
+    if (step === 0 || step === 6) return null;
 
     const instructionKey = `wizard.step${step}.instructions`;
     
@@ -387,14 +428,14 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete, initial
             <li>{t(`${instructionKey}.step1`)}</li>
             <li>{t(`${instructionKey}.step2`)}</li>
             <li>{t(`${instructionKey}.step3`)}</li>
-            {step !== 3 && <li>{t(`${instructionKey}.step4`)}</li>}
+            {step !== 3 && step !== 4 && <li>{t(`${instructionKey}.step4`)}</li>}
           </ol>
         </div>
       </div>
     );
   };
 
-  const hasInstructions = step > 0 && step < 5;
+  const hasInstructions = step > 0 && step < 6;
 
   return (
     <div 
