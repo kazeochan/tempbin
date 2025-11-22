@@ -8,6 +8,8 @@ import Header from './components/Header/Header';
 import Settings from './components/Settings/Settings';
 import OnboardingWizard from './components/OnboardingWizard/OnboardingWizard';
 import PasteConfirmation from './components/PasteConfirmation/PasteConfirmation';
+import StorageUsage from './components/StorageUsage/StorageUsage';
+import LimitExceededModal from './components/LimitExceededModal/LimitExceededModal';
 import { FileItem, R2Config } from './types';
 import { uploadFileToR2, deleteFileFromR2, getFilesList } from './services/r2Service';
 import { persistence } from './utils/persistence';
@@ -28,11 +30,15 @@ function App() {
   const [highContrast, setHighContrast] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [hashFilenames, setHashFilenames] = useState(true);
+  const [storageLimit, setStorageLimit] = useState<number>(10);
+  const [showLimitModal, setShowLimitModal] = useState(false);
+  const [pendingFiles, setPendingFiles] = useState<File[]>([]);
 
   useEffect(() => {
     loadFiles();
     checkExpiredFiles();
     checkR2Config();
+    loadStorageLimit();
     const interval = setInterval(checkExpiredFiles, 10000); // Check every 10 seconds
     
     const savedExpiration = localStorage.getItem('fileExpirationMinutes');
@@ -136,6 +142,17 @@ function App() {
     }
   };
 
+  const loadStorageLimit = async () => {
+    try {
+      const savedLimit = await persistence.getItem('storageLimit');
+      if (savedLimit) {
+        setStorageLimit(parseInt(savedLimit, 10));
+      }
+    } catch (error) {
+      console.error('Error loading storage limit:', error);
+    }
+  };
+
   const saveFiles = async (updatedFiles: FileItem[]) => {
     try {
       await persistence.setItem('files', JSON.stringify(updatedFiles));
@@ -223,7 +240,27 @@ function App() {
 
   const handleFileUpload = async (filesToUpload: File[]) => {
     if (filesToUpload.length === 0) return;
+
+    // Check storage limit
+    const currentUsage = files.reduce((acc, f) => acc + f.size, 0);
+    const uploadSize = filesToUpload.reduce((acc, f) => acc + f.size, 0);
+    const limitBytes = storageLimit * 1024 * 1024 * 1024;
+
+    if (currentUsage + uploadSize > limitBytes) {
+      const dismissedDate = localStorage.getItem('storageLimitPromptDismissedDate');
+      const today = new Date().toDateString();
+      
+      if (dismissedDate !== today) {
+        setPendingFiles(filesToUpload);
+        setShowLimitModal(true);
+        return;
+      }
+    }
     
+    await processUpload(filesToUpload);
+  };
+
+  const processUpload = async (filesToUpload: File[]) => {
     setIsUploading(true);
     setUploadProgress(0);
     try {
@@ -269,6 +306,20 @@ function App() {
       setIsUploading(false);
       setUploadProgress(0);
     }
+  };
+
+  const handleLimitConfirm = (dontShowAgain: boolean) => {
+    if (dontShowAgain) {
+      localStorage.setItem('storageLimitPromptDismissedDate', new Date().toDateString());
+    }
+    setShowLimitModal(false);
+    processUpload(pendingFiles);
+    setPendingFiles([]);
+  };
+
+  const handleLimitCancel = () => {
+    setShowLimitModal(false);
+    setPendingFiles([]);
   };
 
   const handleDeleteFile = async (fileId: string) => {
@@ -354,6 +405,7 @@ function App() {
               </div>
 
               <div className="controls-card">
+                <StorageUsage usedBytes={files.reduce((acc, f) => acc + f.size, 0)} limitGB={storageLimit} />
                 <div className="expiration-control" role="group" aria-labelledby="expiration-label">
                   <label id="expiration-label" htmlFor="mainExpirationSlider">
                     {t('expiration.label')} <strong aria-live="polite">{t('expiration.minutes', { count: expirationMinutes })}</strong>
@@ -431,11 +483,24 @@ function App() {
 
       {showSettings && (
         <Settings 
-          onClose={() => setShowSettings(false)} 
+          onClose={() => {
+            setShowSettings(false);
+            loadStorageLimit();
+          }}
           theme={theme}
           onThemeChange={handleThemeChange}
           highContrast={highContrast}
           onHighContrastChange={handleHighContrastChange}
+        />
+      )}
+
+      {showLimitModal && (
+        <LimitExceededModal
+          onConfirm={handleLimitConfirm}
+          onCancel={handleLimitCancel}
+          currentUsage={files.reduce((acc, f) => acc + f.size, 0)}
+          uploadSize={pendingFiles.reduce((acc, f) => acc + f.size, 0)}
+          limitGB={storageLimit}
         />
       )}
 

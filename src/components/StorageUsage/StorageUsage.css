@@ -1,0 +1,62 @@
+.storage-usage {
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.storage-header {
+  margin-bottom: 0.75rem;
+}
+
+.storage-label {
+  display: block;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+.storage-value {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+  display: inline-block;
+  font-family: inherit;
+}
+
+.storage-bar-container {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.storage-bar {
+  height: 100%;
+  background: var(--accent-color, #3b82f6);
+  border-radius: 10px;
+  transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.storage-bar.warning {
+  background: #f59e0b;
+}
+
+.storage-bar.critical {
+  background: #ef4444;
+}
+
+/* Light Theme Support */
+.app.theme-light .storage-label {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.app.theme-light .storage-value {
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.app.theme-light .storage-bar-container {
+  background: rgba(0, 0, 0, 0.1);
+}

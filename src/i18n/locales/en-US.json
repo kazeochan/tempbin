@@ -72,6 +72,9 @@
     "title": "No files uploaded yet",
     "subtitle": "Upload your first file to get started"
   },
+  "storage": {
+    "usage": "Storage Usage"
+  },
   "settings": {
     "title": "Settings",
     "closeAria": "Close settings",
@@ -89,6 +92,8 @@
     "publicUrl": "Public URL (Optional)",
     "publicUrlPlaceholder": "https://your-domain.com",
     "publicUrlHint": "Custom domain for public file access",
+    "storageLimit": "Storage Limit",
+    "storageLimitHint": "Set your monthly storage limit (Free Tier is 10 GB)",
     "appearance": "Appearance",
     "themeMode": "Theme Mode",
     "themeModeHint": "Choose between light and dark theme",
@@ -189,6 +194,17 @@
     "fileType": "Type",
     "cancel": "Cancel",
     "upload": "Upload"
+  },
+  "limit": {
+    "title": "Storage Limit Exceeded",
+    "message": "Uploading these files will exceed your storage limit.",
+    "currentUsage": "Current Usage",
+    "uploadSize": "Upload Size",
+    "newTotal": "New Total",
+    "limit": "Limit",
+    "dontShowAgain": "Don't show again for today",
+    "cancel": "Cancel",
+    "continue": "Continue Upload"
   },
   "notifications": {
     "uploadSuccess": "File uploaded successfully!",

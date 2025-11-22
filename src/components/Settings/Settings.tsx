@@ -29,6 +29,7 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
     bucketName: '',
     publicUrl: '',
   });
+  const [storageLimit, setStorageLimit] = useState<number>(10);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -47,6 +48,10 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
         ...savedConfig,
         publicUrl: savedConfig.publicUrl || '',
       });
+    }
+    const savedLimit = await persistence.getItem('storageLimit');
+    if (savedLimit) {
+      setStorageLimit(parseInt(savedLimit, 10));
     }
   };
 
@@ -87,6 +92,7 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
     setIsSaving(true);
     try {
       await saveR2Config(config);
+      await persistence.setItem('storageLimit', storageLimit.toString());
       setMessage({ text: t('settings.saveSuccess'), type: 'success' });
       setTimeout(() => {
         handleClose();
@@ -289,6 +295,19 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
               </div>
               {errors.publicUrl && <span className="error-message">{t(errors.publicUrl)}</span>}
               <small id="publicUrl-hint">{t('settings.publicUrlHint')}</small>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="storageLimit">{t('settings.storageLimit')} (GB)</label>
+              <input
+                id="storageLimit"
+                type="number"
+                min="1"
+                value={storageLimit}
+                onChange={(e) => setStorageLimit(Math.max(1, parseInt(e.target.value, 10) || 0))}
+                className="storage-input"
+              />
+              <small>{t('settings.storageLimitHint')}</small>
             </div>
           </div>
 
