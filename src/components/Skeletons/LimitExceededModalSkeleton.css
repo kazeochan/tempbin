@@ -1,0 +1,21 @@
+.skeleton-limit-modal {
+  pointer-events: none;
+  animation: slideUp 0.3s ease-out;
+}
+
+.skeleton-overlay {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.skeleton-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.skeleton-details-box {
+  height: 140px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}

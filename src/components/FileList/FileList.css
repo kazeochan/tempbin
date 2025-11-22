@@ -1,7 +1,6 @@
 
 .file-list {
   margin-top: 2rem;
-  animation: fadeIn 0.4s ease;
 }
 
 .file-list.fade-out {
@@ -129,7 +128,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.2s;
   align-items: center;
-  animation: slideIn 0.3s ease backwards;
 }
 
 .file-list-row.deleting {
@@ -158,6 +156,8 @@
   }
 }
 
+/* Removed staggered animation delays to prevent flickering after skeleton loading */
+/*
 .file-list-row:nth-child(1) { animation-delay: 0.05s; }
 .file-list-row:nth-child(2) { animation-delay: 0.1s; }
 .file-list-row:nth-child(3) { animation-delay: 0.15s; }
@@ -168,6 +168,7 @@
 .file-list-row:nth-child(8) { animation-delay: 0.4s; }
 .file-list-row:nth-child(9) { animation-delay: 0.45s; }
 .file-list-row:nth-child(10) { animation-delay: 0.5s; }
+*/
 
 @keyframes fileRowSlideIn {
   0% {

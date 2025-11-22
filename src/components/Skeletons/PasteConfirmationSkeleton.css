@@ -1,0 +1,22 @@
+.skeleton-paste-modal {
+  pointer-events: none;
+  animation: slideUp 0.3s ease-out;
+}
+
+.skeleton-overlay {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.skeleton-preview-box {
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.skeleton-details-box {
+  height: 120px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}

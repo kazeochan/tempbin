@@ -10,7 +10,7 @@
   justify-content: center;
   z-index: 1000;
   backdrop-filter: blur(4px);
-  animation: fadeIn 0.3s ease-out;
+  /* animation: fadeIn 0.3s ease-out; Removed to prevent flicker */
   padding: 1rem;
 }
 
@@ -28,7 +28,7 @@
   flex-direction: column;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   border: 1px solid var(--border-color);
-  animation: slideUp 0.3s ease-out;
+  /* animation: slideUp 0.3s ease-out; Removed to prevent flicker */
   overflow: hidden;
 }
 

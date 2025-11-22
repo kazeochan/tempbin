@@ -105,89 +105,314 @@
     * {
       box-sizing: border-box;
     }
+
+    /* Skeleton Loader Critical CSS */
+    .main-skeleton {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      min-height: 100vh;
+      background: #000000;
+    }
+    
+    .skeleton-overlay {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes skeleton-shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .skeleton-shimmer {
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.05) 25%, 
+        rgba(255, 255, 255, 0.1) 37%, 
+        rgba(255, 255, 255, 0.05) 63%
+      );
+      background-size: 400% 100%;
+      animation: skeleton-shimmer 1.4s ease infinite;
+      border-radius: 4px;
+    }
+
+    /* Layout */
+    .main-content {
+      padding: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Header Skeleton */
+    .skeleton-header-container {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 0.75rem 2rem;
+      z-index: 100;
+      min-width: 500px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skeleton-logo {
+      width: 120px;
+      height: 24px;
+    }
+
+    .skeleton-header-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .skeleton-action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+    }
+
+    /* Hero Skeleton */
+    .skeleton-hero {
+      text-align: center;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 5rem;
+    }
+
+    .skeleton-title {
+      width: 300px;
+      height: 32px;
+      border-radius: 8px;
+    }
+
+    .skeleton-subtitle {
+      width: 400px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    /* Controls Skeleton */
+    .skeleton-controls {
+      max-width: 650px;
+      margin: 0 auto 1.5rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .skeleton-control-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .skeleton-label {
+      width: 100px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    .skeleton-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 10px;
+    }
+
+    .skeleton-toggle {
+      width: 50px;
+      height: 26px;
+      border-radius: 26px;
+    }
+
+    /* Upload Zone Skeleton */
+    .skeleton-upload-zone {
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      height: 250px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .skeleton-upload-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+
+    .skeleton-upload-text {
+      width: 200px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    /* File List Skeleton */
+    .skeleton-file-list {
+      margin-top: 2rem;
+    }
+
+    .skeleton-list-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .skeleton-list-title {
+      width: 150px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    .skeleton-table {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .skeleton-row {
+      display: grid;
+      grid-template-columns: 40px 1fr 100px 100px 120px;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      align-items: center;
+    }
+
+    .skeleton-cell {
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    .skeleton-checkbox {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .skeleton-header-container {
+        width: calc(100% - 1rem);
+        min-width: unset;
+        top: 0.5rem;
+      }
+      
+      .skeleton-controls {
+        grid-template-columns: 1fr;
+      }
+      
+      .skeleton-row {
+        grid-template-columns: 32px 1fr 70px;
+      }
+      
+      .skeleton-cell:nth-child(3),
+      .skeleton-cell:nth-child(4) {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div id="app">
-    <style>
-      .skeleton-loader {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        background-color: #000000;
-        color: #ffffff;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-      .skeleton-header {
-        height: 64px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        padding: 0 2rem;
-      }
-      .skeleton-logo {
-        width: 120px;
-        height: 24px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-      }
-      .skeleton-main {
-        flex: 1;
-        max-width: 800px;
-        width: 100%;
-        margin: 0 auto;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-      }
-      .skeleton-hero {
-        height: 100px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-      }
-      .skeleton-title {
-        width: 300px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-      }
-      .skeleton-subtitle {
-        width: 400px;
-        height: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-      }
-      .skeleton-upload {
-        height: 300px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px dashed rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-      }
-      @keyframes pulse {
-        0% { opacity: 0.5; }
-        50% { opacity: 0.8; }
-        100% { opacity: 0.5; }
-      }
-      .skeleton-logo, .skeleton-title, .skeleton-subtitle, .skeleton-upload {
-        animation: pulse 1.5s infinite ease-in-out;
-      }
-    </style>
-    <div class="skeleton-loader">
-      <div class="skeleton-header">
-        <div class="skeleton-logo"></div>
-      </div>
-      <div class="skeleton-main">
-        <div class="skeleton-hero">
-          <div class="skeleton-title"></div>
-          <div class="skeleton-subtitle"></div>
+    <div class="main-skeleton skeleton-overlay">
+      <!-- Header Skeleton -->
+      <div class="skeleton-header-container">
+        <div class="skeleton-logo skeleton-shimmer"></div>
+        <div class="skeleton-header-actions">
+          <div class="skeleton-action-btn skeleton-shimmer"></div>
+          <div class="skeleton-action-btn skeleton-shimmer"></div>
+          <div class="skeleton-action-btn skeleton-shimmer"></div>
+          <div class="skeleton-action-btn skeleton-shimmer"></div>
         </div>
-        <div class="skeleton-upload"></div>
       </div>
+
+      <main class="main-content">
+        <div class="container">
+          <!-- Hero Skeleton -->
+          <div class="skeleton-hero">
+            <div class="skeleton-title skeleton-shimmer"></div>
+            <div class="skeleton-subtitle skeleton-shimmer"></div>
+          </div>
+
+          <!-- Controls Skeleton -->
+          <div class="skeleton-controls">
+            <div class="skeleton-control-item">
+              <div class="skeleton-label skeleton-shimmer"></div>
+              <div class="skeleton-slider skeleton-shimmer"></div>
+              <div class="skeleton-label skeleton-shimmer" style="width: 100%; margin-top: 0.5rem;"></div>
+            </div>
+            <div class="skeleton-control-item">
+              <div class="skeleton-label skeleton-shimmer"></div>
+              <div class="skeleton-toggle skeleton-shimmer"></div>
+            </div>
+          </div>
+
+          <!-- Upload Zone Skeleton -->
+          <div class="skeleton-upload-zone">
+            <div class="skeleton-upload-icon skeleton-shimmer"></div>
+            <div class="skeleton-upload-text skeleton-shimmer"></div>
+            <div class="skeleton-upload-text skeleton-shimmer" style="width: 150px; height: 16px;"></div>
+          </div>
+
+          <!-- File List Skeleton -->
+          <div class="skeleton-file-list">
+            <div class="skeleton-list-header">
+              <div class="skeleton-list-title skeleton-shimmer"></div>
+            </div>
+            <div class="skeleton-table">
+              <div class="skeleton-row">
+                <div class="skeleton-checkbox skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer" style="width: 60%;"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+              </div>
+              <div class="skeleton-row">
+                <div class="skeleton-checkbox skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer" style="width: 60%;"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+              </div>
+              <div class="skeleton-row">
+                <div class="skeleton-checkbox skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer" style="width: 60%;"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+                <div class="skeleton-cell skeleton-shimmer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   </div>
   <script type="module" src="/src/index.tsx"></script>

@@ -6,13 +6,14 @@ import UploadZone from './components/UploadZone/UploadZone';
 import FileList from './components/FileList/FileList';
 import Header from './components/Header/Header';
 import StorageUsage from './components/StorageUsage/StorageUsage';
-import SettingsSkeleton from './components/SkeletonLoader/SettingsSkeleton';
-import OnboardingSkeleton from './components/SkeletonLoader/OnboardingSkeleton';
-import PasteSkeleton from './components/SkeletonLoader/PasteSkeleton';
-import LimitSkeleton from './components/SkeletonLoader/LimitSkeleton';
 import { FileItem, R2Config } from './types';
 import { uploadFileToR2, deleteFileFromR2, calculateFileHash } from './services/r2Service';
 import { persistence } from './utils/persistence';
+import SettingsSkeleton from './components/Skeletons/SettingsSkeleton';
+import OnboardingWizardSkeleton from './components/Skeletons/OnboardingWizardSkeleton';
+import PasteConfirmationSkeleton from './components/Skeletons/PasteConfirmationSkeleton';
+import LimitExceededModalSkeleton from './components/Skeletons/LimitExceededModalSkeleton';
+import MainSkeleton from './components/Skeletons/MainSkeleton';
 
 // Lazy load heavy or conditional components
 const Settings = lazy(() => import('./components/Settings/Settings'));
@@ -47,12 +48,27 @@ function App() {
   const [storageLimit, setStorageLimit] = useState<number>(10);
   const [showLimitModal, setShowLimitModal] = useState(false);
   const [pendingFiles, setPendingFiles] = useState<UploadItem[]>([]);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
-    loadFiles();
-    checkExpiredFiles();
-    checkR2Config();
-    loadStorageLimit();
+    const initializeApp = async () => {
+      try {
+        await Promise.all([
+          loadFiles(),
+          checkR2Config(),
+          loadStorageLimit()
+        ]);
+        await checkExpiredFiles();
+      } catch (error) {
+        console.error('Error initializing app:', error);
+      } finally {
+        // Small delay to ensure smooth transition
+        setTimeout(() => setIsInitializing(false), 500);
+      }
+    };
+
+    initializeApp();
+    
     const interval = setInterval(checkExpiredFiles, 10000); // Check every 10 seconds
     
     const savedExpiration = localStorage.getItem('fileExpirationMinutes');
@@ -440,108 +456,114 @@ function App() {
   return (
     <div className={`app theme-${theme} ${highContrast ? 'high-contrast' : ''} ${reducedMotion ? 'reduced-motion' : ''}`}>
       <SpeedInsights />
-      <Header 
-        onSettingsClick={() => setShowSettings(true)}  
-        theme={theme}
-        onThemeToggle={toggleTheme}
-        showSettingsButton={!showWizard}
-      />
-      
-      <main id="main-content" className="main-content" role="main" aria-label="File sharing application">
-        <div className="container">
-          {showWizard ? (
-            <Suspense fallback={<OnboardingSkeleton />}>
-              <OnboardingWizard 
-                onComplete={() => setShowWizard(false)}  
-                highContrast={highContrast}
-                onHighContrastChange={handleHighContrastChange}
-              />
-            </Suspense>
-          ) : (
-            <>
-              <div className="hero-section">
-                <h1 className="hero-title">{t('hero.title')}</h1>
-                <p className="hero-subtitle">
-                  {t('hero.subtitle', { count: expirationMinutes, minutes: expirationMinutes })}
-                </p>
-              </div>
-
-              <div className="controls-card">
-                <StorageUsage usedBytes={files.reduce((acc, f) => acc + f.size, 0)} limitGB={storageLimit} />
-                <div className="expiration-control" role="group" aria-labelledby="expiration-label">
-                  <label id="expiration-label" htmlFor="mainExpirationSlider">
-                    {t('expiration.label')} <strong aria-live="polite">{t('expiration.minutes', { count: expirationMinutes })}</strong>
-                  </label>
-                  <input
-                    id="mainExpirationSlider"
-                    type="range"
-                    min="1"
-                    max="10"
-                    step="1"
-                    value={expirationMinutes}
-                    onChange={(e) => handleExpirationChange(parseInt(e.target.value, 10))}
-                    className="expiration-slider"
-                    aria-valuemin={1}
-                    aria-valuemax={10}
-                    aria-valuenow={expirationMinutes}
-                    aria-valuetext={`${expirationMinutes} minute${expirationMinutes !== 1 ? 's' : ''}`}
+      {isInitializing ? (
+        <MainSkeleton />
+      ) : (
+        <>
+          <Header 
+            onSettingsClick={() => setShowSettings(true)}  
+            theme={theme}
+            onThemeToggle={toggleTheme}
+            showSettingsButton={!showWizard}
+          />
+          
+          <main id="main-content" className="main-content" role="main" aria-label="File sharing application">
+            <div className="container">
+              {showWizard ? (
+                <Suspense fallback={<OnboardingWizardSkeleton />}>
+                  <OnboardingWizard 
+                    onComplete={() => setShowWizard(false)}  
+                    highContrast={highContrast}
+                    onHighContrastChange={handleHighContrastChange}
                   />
-                  <div className="slider-labels">
-                    <span>{t('expiration.min1')}</span>
-                    <span>{t('expiration.min5')}</span>
-                    <span>{t('expiration.min10')}</span>
+                </Suspense>
+              ) : (
+                <>
+                  <div className="hero-section">
+                    <h1 className="hero-title">{t('hero.title')}</h1>
+                    <p className="hero-subtitle">
+                      {t('hero.subtitle', { count: expirationMinutes, minutes: expirationMinutes })}
+                    </p>
                   </div>
-                </div>
 
-                <div className="hash-filename-control" role="group" aria-labelledby="hash-filename-label">
-                  <div className="hash-filename-item">
-                    <div className="hash-filename-info">
-                      <label id="hash-filename-label" htmlFor="hashFilenameToggle">{t('hashFilename.label')}</label>
-                      <small>{t('hashFilename.hint')}</small>
-                    </div>
-                    <label className="switch">
+                  <div className="controls-card">
+                    <StorageUsage usedBytes={files.reduce((acc, f) => acc + f.size, 0)} limitGB={storageLimit} />
+                    <div className="expiration-control" role="group" aria-labelledby="expiration-label">
+                      <label id="expiration-label" htmlFor="mainExpirationSlider">
+                        {t('expiration.label')} <strong aria-live="polite">{t('expiration.minutes', { count: expirationMinutes })}</strong>
+                      </label>
                       <input
-                        id="hashFilenameToggle"
-                        type="checkbox"
-                        checked={hashFilenames}
-                        onChange={(e) => handleHashFilenamesChange(e.target.checked)}
-                        aria-label={t('hashFilename.label')}
+                        id="mainExpirationSlider"
+                        type="range"
+                        min="1"
+                        max="10"
+                        step="1"
+                        value={expirationMinutes}
+                        onChange={(e) => handleExpirationChange(parseInt(e.target.value, 10))}
+                        className="expiration-slider"
+                        aria-valuemin={1}
+                        aria-valuemax={10}
+                        aria-valuenow={expirationMinutes}
+                        aria-valuetext={`${expirationMinutes} minute${expirationMinutes !== 1 ? 's' : ''}`}
                       />
-                      <span className="switch-slider"></span>
-                    </label>
+                      <div className="slider-labels">
+                        <span>{t('expiration.min1')}</span>
+                        <span>{t('expiration.min5')}</span>
+                        <span>{t('expiration.min10')}</span>
+                      </div>
+                    </div>
+
+                    <div className="hash-filename-control" role="group" aria-labelledby="hash-filename-label">
+                      <div className="hash-filename-item">
+                        <div className="hash-filename-info">
+                          <label id="hash-filename-label" htmlFor="hashFilenameToggle">{t('hashFilename.label')}</label>
+                          <small>{t('hashFilename.hint')}</small>
+                        </div>
+                        <label className="switch">
+                          <input
+                            id="hashFilenameToggle"
+                            type="checkbox"
+                            checked={hashFilenames}
+                            onChange={(e) => handleHashFilenamesChange(e.target.checked)}
+                            aria-label={t('hashFilename.label')}
+                          />
+                          <span className="switch-slider"></span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <UploadZone 
-                onFileUpload={handleFileUpload} 
-                isUploading={isUploading}
-                expirationMinutes={expirationMinutes}
-                progress={uploadProgress}
-              />
+                  <UploadZone 
+                    onFileUpload={handleFileUpload} 
+                    isUploading={isUploading}
+                    expirationMinutes={expirationMinutes}
+                    progress={uploadProgress}
+                  />
 
-              {files.length > 0 && (
-                <FileList 
-                  files={files} 
-                  onDeleteFile={handleDeleteFile}
-                  onDeleteSelected={handleDeleteSelected}
-                  fadeOut={fileListFadeOut}
-                />
+                  {files.length > 0 && (
+                    <FileList 
+                      files={files} 
+                      onDeleteFile={handleDeleteFile}
+                      onDeleteSelected={handleDeleteSelected}
+                      fadeOut={fileListFadeOut}
+                    />
+                  )}
+
+                  {files.length === 0 && !isUploading && (
+                    <div className="empty-state" role="status" aria-live="polite">
+                      <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" role="img" aria-label="No files uploaded">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      <h3>{t('empty.title')}</h3>
+                      <p>{t('empty.subtitle')}</p>
+                    </div>
+                  )}
+                </>
               )}
-
-              {files.length === 0 && !isUploading && (
-                <div className="empty-state" role="status" aria-live="polite">
-                  <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" role="img" aria-label="No files uploaded">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                  </svg>
-                  <h3>{t('empty.title')}</h3>
-                  <p>{t('empty.subtitle')}</p>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </main>
+            </div>
+          </main>
+        </>
+      )}
 
       {showSettings && (
         <Suspense fallback={<SettingsSkeleton />}>
@@ -559,7 +581,7 @@ function App() {
       )}
 
       {showLimitModal && (
-        <Suspense fallback={<LimitSkeleton />}>
+        <Suspense fallback={<LimitExceededModalSkeleton />}>
           <LimitExceededModal
             onConfirm={handleLimitConfirm}
             onCancel={handleLimitCancel}
@@ -571,7 +593,7 @@ function App() {
       )}
 
       {pastedFiles.length > 0 && (
-        <Suspense fallback={<PasteSkeleton />}>
+        <Suspense fallback={<PasteConfirmationSkeleton />}>
           <PasteConfirmation
             files={pastedFiles}
             onConfirm={() => {

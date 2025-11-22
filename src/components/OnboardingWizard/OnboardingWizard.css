@@ -11,7 +11,7 @@
   overflow: hidden;
   /* display: flex; Removed flex from container */
   /* flex-direction: column; Removed flex-direction from container */
-  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  /* animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); Removed to prevent flicker */
   transition: max-width 0.4s ease, height 0.4s ease; /* Added height transition */
 }
 

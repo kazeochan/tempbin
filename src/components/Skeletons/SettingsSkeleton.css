@@ -1,0 +1,38 @@
+.skeleton-settings-modal {
+  pointer-events: none;
+  animation: slideUp 0.3s ease;
+}
+
+.skeleton-overlay {
+  animation: fadeIn 0.2s ease;
+}
+
+.skeleton-close-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+}
+
+.skeleton-section-title {
+  height: 24px;
+  width: 120px;
+  margin-bottom: 1.25rem;
+}
+
+.skeleton-info-box {
+  height: 80px;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.skeleton-label {
+  height: 16px;
+  width: 140px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-toggle-control {
+  width: 50px;
+  height: 26px;
+  border-radius: 13px;
+}
