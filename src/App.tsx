@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import './App.css';
 import UploadZone from './components/UploadZone/UploadZone';
 import FileList from './components/FileList/FileList';
 import Header from './components/Header/Header';
-import Settings from './components/Settings/Settings';
-import OnboardingWizard from './components/OnboardingWizard/OnboardingWizard';
-import PasteConfirmation from './components/PasteConfirmation/PasteConfirmation';
 import StorageUsage from './components/StorageUsage/StorageUsage';
-import LimitExceededModal from './components/LimitExceededModal/LimitExceededModal';
 import { FileItem, R2Config } from './types';
 import { uploadFileToR2, deleteFileFromR2, calculateFileHash } from './services/r2Service';
 import { persistence } from './utils/persistence';
+
+// Lazy load heavy or conditional components
+const Settings = lazy(() => import('./components/Settings/Settings'));
+const OnboardingWizard = lazy(() => import('./components/OnboardingWizard/OnboardingWizard'));
+const PasteConfirmation = lazy(() => import('./components/PasteConfirmation/PasteConfirmation'));
+const LimitExceededModal = lazy(() => import('./components/LimitExceededModal/LimitExceededModal'));
 
 interface UploadItem {
   file: File;
@@ -446,11 +448,13 @@ function App() {
       <main id="main-content" className="main-content" role="main" aria-label="File sharing application">
         <div className="container">
           {showWizard ? (
-            <OnboardingWizard 
-              onComplete={() => setShowWizard(false)} 
-              highContrast={highContrast}
-              onHighContrastChange={handleHighContrastChange}
-            />
+            <Suspense fallback={<div className="modal-loading"><div className="loading-spinner"></div></div>}>
+              <OnboardingWizard 
+                onComplete={() => setShowWizard(false)}  
+                highContrast={highContrast}
+                onHighContrastChange={handleHighContrastChange}
+              />
+            </Suspense>
           ) : (
             <>
               <div className="hero-section">
@@ -538,37 +542,43 @@ function App() {
       </main>
 
       {showSettings && (
-        <Settings 
-          onClose={() => {
-            setShowSettings(false);
-            loadStorageLimit();
-          }}
-          theme={theme}
-          onThemeChange={handleThemeChange}
-          highContrast={highContrast}
-          onHighContrastChange={handleHighContrastChange}
-        />
+        <Suspense fallback={<div className="modal-loading"><div className="loading-spinner"></div></div>}>
+          <Settings 
+            onClose={() => {
+              setShowSettings(false);
+              loadStorageLimit();
+            }}
+            theme={theme}
+            onThemeChange={handleThemeChange}
+            highContrast={highContrast}
+            onHighContrastChange={handleHighContrastChange}
+          />
+        </Suspense>
       )}
 
       {showLimitModal && (
-        <LimitExceededModal
-          onConfirm={handleLimitConfirm}
-          onCancel={handleLimitCancel}
-          currentUsage={files.reduce((acc, f) => acc + f.size, 0)}
-          uploadSize={pendingFiles.reduce((acc, item) => acc + item.file.size, 0)}
-          limitGB={storageLimit}
-        />
+        <Suspense fallback={<div className="modal-loading"><div className="loading-spinner"></div></div>}>
+          <LimitExceededModal
+            onConfirm={handleLimitConfirm}
+            onCancel={handleLimitCancel}
+            currentUsage={files.reduce((acc, f) => acc + f.size, 0)}
+            uploadSize={pendingFiles.reduce((acc, item) => acc + item.file.size, 0)}
+            limitGB={storageLimit}
+          />
+        </Suspense>
       )}
 
       {pastedFiles.length > 0 && (
-        <PasteConfirmation
-          files={pastedFiles}
-          onConfirm={() => {
-            handleFileUpload(pastedFiles);
-            setPastedFiles([]);
-          }}
-          onCancel={() => setPastedFiles([])}
-        />
+        <Suspense fallback={<div className="modal-loading"><div className="loading-spinner"></div></div>}>
+          <PasteConfirmation
+            files={pastedFiles}
+            onConfirm={() => {
+              handleFileUpload(pastedFiles);
+              setPastedFiles([]);
+            }}
+            onCancel={() => setPastedFiles([])}
+          />
+        </Suspense>
       )}
 
       {notification && (

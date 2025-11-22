@@ -12,8 +12,50 @@ export const getR2Config = async (): Promise<R2Config | null> => {
 };
 
 export const calculateFileHash = async (file: File): Promise<string> => {
+  // For large files (> 50MB), use a partial hash for performance
+  if (file.size > 50 * 1024 * 1024) {
+    return calculatePartialHash(file);
+  }
   const buffer = await file.arrayBuffer();
   return sha256(buffer);
+};
+
+const calculatePartialHash = async (file: File): Promise<string> => {
+  const chunkSize = 1024 * 1024; // 1MB
+  const chunks: ArrayBuffer[] = [];
+  
+  // First 1MB
+  chunks.push(await file.slice(0, chunkSize).arrayBuffer());
+  
+  // Middle 1MB
+  const middle = Math.floor(file.size / 2);
+  if (middle > chunkSize) {
+    chunks.push(await file.slice(middle, middle + chunkSize).arrayBuffer());
+  }
+  
+  // Last 1MB
+  if (file.size > 2 * chunkSize) {
+    chunks.push(await file.slice(Math.max(0, file.size - chunkSize)).arrayBuffer());
+  }
+  
+  // Combine with size and name
+  const encoder = new TextEncoder();
+  const metadata = encoder.encode(`${file.name}-${file.size}`);
+  
+  // Hash all parts
+  const totalLength = chunks.reduce((acc, chunk) => acc + chunk.byteLength, 0) + metadata.length;
+  const combined = new Uint8Array(totalLength);
+  let offset = 0;
+  
+  combined.set(metadata, offset);
+  offset += metadata.length;
+  
+  for (const chunk of chunks) {
+    combined.set(new Uint8Array(chunk), offset);
+    offset += chunk.byteLength;
+  }
+  
+  return sha256(combined);
 };
 
 export const saveR2Config = async (config: R2Config): Promise<void> => {
@@ -59,7 +101,7 @@ const createAwsSignature = async (
   path: string,
   headers: Record<string, string>,
   config: R2Config,
-  payload: ArrayBuffer | string = '',
+  payload: BufferSource | string = '',
   queryParams: Record<string, string> = {}
 ): Promise<string> => {
   const region = 'auto';
@@ -94,7 +136,7 @@ const createAwsSignature = async (
   return `AWS4-HMAC-SHA256 Credential=${config.accessKeyId}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
 };
 
-const sha256 = async (data: string | ArrayBuffer): Promise<string> => {
+const sha256 = async (data: string | BufferSource): Promise<string> => {
   if (!crypto || !crypto.subtle) {
     throw new Error('crypto.subtle is not available. Please use HTTPS or localhost to enable secure cryptography APIs required for R2 uploads.');
   }
