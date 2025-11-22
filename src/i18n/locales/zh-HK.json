@@ -167,13 +167,13 @@
       }
     },
     "step4": {
-      "title": "Storage Limit",
-      "description": "Set a storage limit to help manage your R2 usage and costs.",
+      "title": "儲存空間限制",
+      "description": "設定儲存空間限制嚟幫你管理 R2 用量同費用。",
       "instructions": {
-        "title": "About Storage Limits",
-        "step1": "Cloudflare R2 offers a generous free tier (10 GB/month).",
-        "step2": "Set a limit here to get warned before you exceed it.",
-        "step3": "This is a client-side check only and does not enforce limits on Cloudflare."
+        "title": "關於儲存空間限制",
+        "step1": "Cloudflare R2 提供慷慨嘅免費版（每月 10 GB）。",
+        "step2": "喺呢度設定限制，超過之前會有警告。",
+        "step3": "呢個只係客戶端檢查，唔會喺 Cloudflare 上強制執行限制。"
       }
     },
     "step5": {
@@ -187,15 +187,15 @@
         "step4": "貼入去 CORS 原則編輯器，然後儲存。"
       },
       "jsonLabel": "CORS 設定 JSON",
-      "manualLabel": "Manual Configuration (JSON)",
-      "autoConfigure": "Configure Automatically",
-      "configuring": "Configuring...",
-      "checkConfig": "Check Configuration",
-      "autoSuccess": "CORS configuration applied successfully!",
-      "autoError": "Failed to apply CORS configuration",
-      "checkSuccess": "CORS configuration found!",
-      "checkNotFound": "No CORS configuration found.",
-      "checkError": "Error checking CORS configuration",
+      "manualLabel": "手動設定 (JSON)",
+      "autoConfigure": "自動設定",
+      "configuring": "設定緊...",
+      "checkConfig": "檢查設定",
+      "autoSuccess": "CORS 設定成功套用咗！",
+      "autoError": "套用 CORS 設定失敗",
+      "checkSuccess": "搵到 CORS 設定！",
+      "checkNotFound": "搵唔到 CORS 設定。",
+      "checkError": "檢查 CORS 設定時出錯",
       "copy": "抄",
       "pasteHint": "貼呢個入去你 R2 儲存桶嘅 CORS 原則設定。"
     },

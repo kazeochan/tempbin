@@ -167,13 +167,13 @@
       }
     },
     "step4": {
-      "title": "Storage Limit",
-      "description": "Set a storage limit to help manage your R2 usage and costs.",
+      "title": "Límite de Almacenamiento",
+      "description": "Establezca un límite de almacenamiento para ayudar a gestionar el uso y costos de R2.",
       "instructions": {
-        "title": "About Storage Limits",
-        "step1": "Cloudflare R2 offers a generous free tier (10 GB/month).",
-        "step2": "Set a limit here to get warned before you exceed it.",
-        "step3": "This is a client-side check only and does not enforce limits on Cloudflare."
+        "title": "Acerca de los Límites de Almacenamiento",
+        "step1": "Cloudflare R2 ofrece un generoso nivel gratuito (10 GB/mes).",
+        "step2": "Establezca un límite aquí para recibir advertencias antes de excederlo.",
+        "step3": "Esta es solo una verificación del lado del cliente y no impone límites en Cloudflare."
       }
     },
     "step5": {
@@ -187,15 +187,15 @@
         "step4": "Péguela en el editor de Política CORS y guarde."
       },
       "jsonLabel": "JSON de configuración CORS",
-      "manualLabel": "Manual Configuration (JSON)",
-      "autoConfigure": "Configure Automatically",
-      "configuring": "Configuring...",
-      "checkConfig": "Check Configuration",
-      "autoSuccess": "CORS configuration applied successfully!",
-      "autoError": "Failed to apply CORS configuration",
-      "checkSuccess": "CORS configuration found!",
-      "checkNotFound": "No CORS configuration found.",
-      "checkError": "Error checking CORS configuration",
+      "manualLabel": "Configuración Manual (JSON)",
+      "autoConfigure": "Configurar Automáticamente",
+      "configuring": "Configurando...",
+      "checkConfig": "Verificar Configuración",
+      "autoSuccess": "¡Configuración CORS aplicada exitosamente!",
+      "autoError": "Error al aplicar la configuración CORS",
+      "checkSuccess": "¡Configuración CORS encontrada!",
+      "checkNotFound": "No se encontró configuración CORS.",
+      "checkError": "Error al verificar la configuración CORS",
       "copy": "Copiar",
       "pasteHint": "Pega esto en la configuración de la política CORS de tu bucket R2."
     },

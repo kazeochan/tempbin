@@ -167,13 +167,13 @@
       }
     },
     "step4": {
-      "title": "Storage Limit",
-      "description": "Set a storage limit to help manage your R2 usage and costs.",
+      "title": "ストレージ制限",
+      "description": "R2の使用量とコストを管理するためにストレージ制限を設定します。",
       "instructions": {
-        "title": "About Storage Limits",
-        "step1": "Cloudflare R2 offers a generous free tier (10 GB/month).",
-        "step2": "Set a limit here to get warned before you exceed it.",
-        "step3": "This is a client-side check only and does not enforce limits on Cloudflare."
+        "title": "ストレージ制限について",
+        "step1": "Cloudflare R2は寛大な無料プランを提供しています（月10 GB）。",
+        "step2": "超過する前に警告を受けるために、ここで制限を設定してください。",
+        "step3": "これはクライアント側のチェックのみで、Cloudflare上で制限を強制するものではありません。"
       }
     },
     "step5": {
@@ -187,15 +187,15 @@
         "step4": "CORSポリシーエディターに貼り付けて保存します。"
       },
       "jsonLabel": "CORS設定JSON",
-      "manualLabel": "Manual Configuration (JSON)",
-      "autoConfigure": "Configure Automatically",
-      "configuring": "Configuring...",
-      "checkConfig": "Check Configuration",
-      "autoSuccess": "CORS configuration applied successfully!",
-      "autoError": "Failed to apply CORS configuration",
-      "checkSuccess": "CORS configuration found!",
-      "checkNotFound": "No CORS configuration found.",
-      "checkError": "Error checking CORS configuration",
+      "manualLabel": "手動設定 (JSON)",
+      "autoConfigure": "自動設定",
+      "configuring": "設定中...",
+      "checkConfig": "設定を確認",
+      "autoSuccess": "CORS設定が正常に適用されました！",
+      "autoError": "CORS設定の適用に失敗しました",
+      "checkSuccess": "CORS設定が見つかりました！",
+      "checkNotFound": "CORS設定が見つかりません。",
+      "checkError": "CORS設定の確認中にエラーが発生しました",
       "copy": "コピー",
       "pasteHint": "これをR2バケットのCORSポリシー設定に貼り付けてください。"
     },
