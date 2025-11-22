@@ -5,7 +5,7 @@ import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import './OnboardingWizard.css';
 import { R2Config } from '../../types';
 import { persistence } from '../../utils/persistence';
-import { getBucketCors } from '../../services/r2Service';
+import { getBucketCors, putBucketLifecycle } from '../../services/r2Service';
 import { 
   validateAccountId, 
   validateBucketName, 
@@ -37,6 +37,17 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   const [height, setHeight] = useState<number | undefined>(undefined);
   const [corsStatus, setCorsStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [corsMessage, setCorsMessage] = useState<string>('');
+  
+  // Lifecycle State
+  const [lifecycleEnabled, setLifecycleEnabled] = useState(true);
+  const [lifecycleRuleName, setLifecycleRuleName] = useState('Delete after 1 day');
+  const [lifecyclePrefix, setLifecyclePrefix] = useState('');
+  const [lifecycleDays, setLifecycleDays] = useState(1);
+  const [lifecycleAbortMultipart, setLifecycleAbortMultipart] = useState(true);
+  const [lifecycleAbortDays, setLifecycleAbortDays] = useState(7);
+  const [lifecycleStatus, setLifecycleStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [lifecycleMessage, setLifecycleMessage] = useState<string>('');
+
   const innerRef = useRef<HTMLDivElement>(null);
   const isDarkMode = document.documentElement.classList.contains('theme-dark') || 
                      (!document.documentElement.classList.contains('theme-light') && 
@@ -472,7 +483,180 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
     );
   };
 
-  const renderStep6_Completion = () => (
+  const renderStep6_Lifecycle = () => {
+    const handleApplyLifecycle = async () => {
+      setLifecycleStatus('loading');
+      setLifecycleMessage('');
+      try {
+        const rules = [{
+          id: lifecycleRuleName,
+          prefix: lifecyclePrefix,
+          status: lifecycleEnabled ? 'Enabled' : 'Disabled',
+          expirationDays: lifecycleDays,
+          abortIncompleteMultipartUpload: lifecycleAbortMultipart ? lifecycleAbortDays : undefined
+        }];
+        
+        await putBucketLifecycle(config as R2Config, rules);
+        setLifecycleStatus('success');
+        setLifecycleMessage('Lifecycle policy applied successfully!');
+      } catch (error: any) {
+        setLifecycleStatus('error');
+        setLifecycleMessage('Error applying policy: ' + error.message);
+      }
+    };
+
+    return (
+      <div className="wizard-step">
+        <h2 className="wizard-title">{t('wizard.step6.title')}</h2>
+        <p className="wizard-description">{t('wizard.step6.description')}</p>
+        
+        <div className="wizard-form lifecycle-form">
+          <div className="lifecycle-card">
+            <div className="form-group toggle-group">
+              <label htmlFor="lifecycle-toggle" className="toggle-label">
+                Object lifecycle rule is {lifecycleEnabled ? 'enabled' : 'disabled'}
+              </label>
+              <label className="switch">
+                <input 
+                  id="lifecycle-toggle"
+                  type="checkbox" 
+                  checked={lifecycleEnabled}
+                  onChange={(e) => setLifecycleEnabled(e.target.checked)}
+                />
+                <span className="switch-slider"></span>
+              </label>
+            </div>
+
+            <div className={`lifecycle-settings ${!lifecycleEnabled ? 'disabled' : ''}`}>
+              <div className="form-group">
+                <label htmlFor="rule-name">Rule name</label>
+                <input
+                  id="rule-name"
+                  type="text"
+                  value={lifecycleRuleName}
+                  onChange={(e) => setLifecycleRuleName(e.target.value)}
+                  placeholder="e.g., Delete temp files"
+                  disabled={!lifecycleEnabled}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="rule-prefix">Rule scope: Apply to objects with the following prefix (optional)</label>
+                <input
+                  id="rule-prefix"
+                  type="text"
+                  value={lifecyclePrefix}
+                  onChange={(e) => setLifecyclePrefix(e.target.value)}
+                  placeholder="e.g., logs/"
+                  disabled={!lifecycleEnabled}
+                />
+              </div>
+
+              <div className="form-group lifecycle-actions">
+                <label className="section-label">Lifecycle action: Select at least one lifecycle action.</label>
+                
+                <div className="checkbox-group">
+                  <div className="checkbox-row">
+                    <input 
+                      id="delete-objects"
+                      type="checkbox" 
+                      checked={true} 
+                      readOnly
+                      disabled={!lifecycleEnabled}
+                    />
+                    <label htmlFor="delete-objects">Delete uploaded objects after:</label>
+                  </div>
+                  <div className="input-row">
+                    <input 
+                      type="number" 
+                      min="1" 
+                      value={lifecycleDays}
+                      onChange={(e) => setLifecycleDays(parseInt(e.target.value) || 1)}
+                      className="days-input"
+                      disabled={!lifecycleEnabled}
+                    />
+                    <span className="unit">Days</span>
+                  </div>
+                </div>
+
+                <div className="checkbox-group">
+                  <div className="checkbox-row">
+                    <input 
+                      id="abort-multipart"
+                      type="checkbox" 
+                      checked={lifecycleAbortMultipart}
+                      onChange={(e) => setLifecycleAbortMultipart(e.target.checked)}
+                      disabled={!lifecycleEnabled}
+                    />
+                    <label htmlFor="abort-multipart">Abort incomplete multipart uploads after:</label>
+                  </div>
+                  {lifecycleAbortMultipart && (
+                    <div className="input-row">
+                      <input 
+                        type="number" 
+                        min="1" 
+                        value={lifecycleAbortDays}
+                        onChange={(e) => setLifecycleAbortDays(parseInt(e.target.value) || 1)}
+                        className="days-input"
+                        disabled={!lifecycleEnabled}
+                      />
+                      <span className="unit">Days</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="cors-actions" style={{ marginTop: '1.5rem', display: 'flex', gap: '10px', alignItems: 'center' }}>
+            {lifecycleStatus === 'success' ? (
+              <>
+                <div className="success-message" style={{ color: '#4caf50', display: 'flex', alignItems: 'center', gap: '8px', flex: 1, fontWeight: 500 }}>
+                  <span className="check-icon">✓</span> Policy Applied!
+                </div>
+                <button 
+                  className="btn-secondary"
+                  onClick={handleApplyLifecycle}
+                  style={{ padding: '8px 16px', fontSize: '0.9rem' }}
+                >
+                  Reapply
+                </button>
+              </>
+            ) : (
+              <button 
+                className={`btn-secondary cors-check-button ${lifecycleStatus}`} 
+                onClick={handleApplyLifecycle}
+                disabled={lifecycleStatus === 'loading'}
+                style={{ width: '100%' }}
+              >
+                {lifecycleStatus === 'idle' && 'Apply Lifecycle Policy'}
+                {lifecycleStatus === 'loading' && (
+                  <>
+                    <span className="spinner-small"></span> Applying...
+                  </>
+                )}
+                {lifecycleStatus === 'error' && (
+                  <>
+                    <span className="error-icon">✕</span> {lifecycleMessage || 'Error'} - Retry
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="wizard-actions">
+          <button className="btn-secondary" onClick={handleBack}>{t('wizard.back')}</button>
+          <button className="btn-primary" onClick={handleNext}>
+            {t('wizard.next')}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderStep7_Completion = () => (
     <div className="wizard-step">
       <svg className="completion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -495,11 +679,12 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
     renderStep3_PublicUrl,
     renderStep4_StorageLimit,
     renderStep5_CORS,
-    renderStep6_Completion
+    renderStep6_Lifecycle,
+    renderStep7_Completion
   ];
 
   const renderInstructions = () => {
-    if (step === 0 || step === 6) return null;
+    if (step === 0 || step === 7) return null;
 
     const instructionKey = `wizard.step${step}.instructions`;
     
@@ -518,7 +703,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
     );
   };
 
-  const hasInstructions = step > 0 && step < 6;
+  const hasInstructions = step > 0 && step < 7;
 
   return (
     <div 

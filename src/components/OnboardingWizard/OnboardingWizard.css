@@ -696,3 +696,219 @@
   border: 2px solid #000000 !important;
   color: #000000 !important;
 }
+
+/* Lifecycle Form Styles */
+.lifecycle-form .toggle-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.lifecycle-settings {
+  transition: opacity 0.3s ease;
+}
+
+.lifecycle-settings.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.app.theme-light .lifecycle-form .toggle-group {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.toggle-label {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 !important;
+}
+
+/* Switch Toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .switch-slider {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.switch input:checked + .switch-slider:before {
+  transform: translateX(24px);
+}
+
+.switch input:focus + .switch-slider {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.switch input:focus:not(:focus-visible) + .switch-slider {
+  outline: none;
+}
+
+.app.theme-light .switch-slider {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.app.theme-light .switch input:checked + .switch-slider {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.app.theme-light .switch input:focus + .switch-slider {
+  outline-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkbox Groups */
+.checkbox-group {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.app.theme-light .checkbox-group {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.checkbox-row label {
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 28px;
+}
+
+.days-input {
+  width: 80px !important;
+  padding: 6px 10px !important;
+}
+
+.unit {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+.app.theme-light .unit {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.section-label {
+  font-weight: 600;
+  margin-bottom: 12px !important;
+  display: block;
+}
+
+/* High Contrast Overrides for new elements */
+.app.high-contrast .switch-slider {
+  background-color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+.app.high-contrast .switch input:checked + .switch-slider {
+  background-color: #ffffff !important;
+}
+
+.app.high-contrast .switch input:checked + .switch-slider:before {
+  background-color: #000000 !important;
+}
+
+.app.high-contrast .switch-slider:before {
+  background-color: #ffffff !important;
+}
+
+.app.high-contrast .checkbox-group {
+  border: 1px solid #ffffff !important;
+  background: transparent !important;
+}
+
+/* Lifecycle Card Styles */
+.lifecycle-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.app.theme-light .lifecycle-card {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.lifecycle-card .toggle-group {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  /* Border is already handled by .lifecycle-form .toggle-group but we can reinforce or adjust here if needed */
+}
+
+/* High Contrast Card Styles */
+.app.high-contrast .lifecycle-card {
+  background: transparent !important;
+  border: 1px solid #ffffff !important;
+}
+
+.app.theme-light.high-contrast .lifecycle-card {
+  border: 1px solid #000000 !important;
+}
