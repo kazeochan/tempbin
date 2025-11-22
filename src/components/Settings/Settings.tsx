@@ -114,6 +114,77 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
     }
   };
 
+  const handleResetLimitWarning = async () => {
+    await persistence.removeItem('storageLimitPromptDismissedDate');
+    setMessage({ text: 'Limit warning reset', type: 'success' });
+  };
+
+  const handleLogStorage = () => {
+    console.group('Local Storage Dump');
+    // Create a clean object from localStorage to display
+    const storage: Record<string, string> = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key) {
+        storage[key] = localStorage.getItem(key) || '';
+      }
+    }
+    console.table(storage);
+    console.groupEnd();
+    setMessage({ text: 'Storage logged to console', type: 'success' });
+  };
+
+  const handleFillDummyConfig = () => {
+    setConfig({
+      accountId: '00000000000000000000000000000000',
+      accessKeyId: '00000000000000000000000000000000',
+      secretAccessKey: '0000000000000000000000000000000000000000000000000000000000000000',
+      bucketName: 'test-bucket',
+      publicUrl: 'https://test.example.com'
+    });
+    setMessage({ text: 'Dummy config filled', type: 'success' });
+  };
+
+  const handleInjectFakeFiles = async () => {
+    const fakeFiles = [
+      {
+        id: `fake-${Date.now()}-1`,
+        name: 'debug-image.png',
+        size: 2.5 * 1024 * 1024,
+        uploadedAt: Date.now(),
+        expiresAt: Date.now() + 10 * 60 * 1000,
+        url: 'https://example.com/debug-image.png'
+      },
+      {
+        id: `fake-${Date.now()}-2`,
+        name: 'debug-document.pdf',
+        size: 500 * 1024,
+        uploadedAt: Date.now(),
+        expiresAt: Date.now() + 10 * 60 * 1000,
+        url: 'https://example.com/debug-document.pdf'
+      }
+    ];
+    
+    const existing = await persistence.getItem('files');
+    const files = existing ? JSON.parse(existing) : [];
+    await persistence.setItem('files', JSON.stringify([...files, ...fakeFiles]));
+    
+    setMessage({ text: 'Fake files injected. Reloading...', type: 'success' });
+    setTimeout(() => window.location.reload(), 1000);
+  };
+
+  const handleResetOnboarding = async () => {
+    await persistence.removeItem('r2Config');
+    setMessage({ text: 'Onboarding reset. Reloading...', type: 'success' });
+    setTimeout(() => window.location.reload(), 1000);
+  };
+
+  const handleClearFiles = async () => {
+    await persistence.removeItem('files');
+    setMessage({ text: 'Files cleared. Reloading...', type: 'success' });
+    setTimeout(() => window.location.reload(), 1000);
+  };
+
   const handleChange = (field: keyof R2Config, value: string) => {
     const newValue = value.trim();
     setConfig(prev => ({ ...prev, [field]: newValue }));
@@ -382,6 +453,56 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
               </div>
             </div>
           </div>
+
+          {import.meta.env.DEV && (
+            <div className="debug-section">
+              <h3 className="section-title">Debug (Dev Only)</h3>
+              <div className="settings-actions" style={{ justifyContent: 'flex-start', gap: '10px', marginTop: '1rem', flexWrap: 'wrap' }}>
+                <button 
+                  className="button secondary" 
+                  onClick={handleResetLimitWarning} 
+                  type="button"
+                >
+                  Reset Limit Warning
+                </button>
+                <button 
+                  className="button secondary" 
+                  onClick={handleLogStorage} 
+                  type="button"
+                >
+                  Log Storage
+                </button>
+                <button 
+                  className="button secondary" 
+                  onClick={handleFillDummyConfig} 
+                  type="button"
+                >
+                  Fill Dummy Config
+                </button>
+                <button 
+                  className="button secondary" 
+                  onClick={handleInjectFakeFiles} 
+                  type="button"
+                >
+                  Inject Fake Files
+                </button>
+                <button 
+                  className="button secondary" 
+                  onClick={handleResetOnboarding} 
+                  type="button"
+                >
+                  Reset Onboarding
+                </button>
+                <button 
+                  className="button secondary" 
+                  onClick={handleClearFiles} 
+                  type="button"
+                >
+                  Clear Files
+                </button>
+              </div>
+            </div>
+          )}
 
           {message && (
             <div className={`settings-message ${message.type}`}>

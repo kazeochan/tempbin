@@ -524,6 +524,16 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.debug-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app.theme-light .debug-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .app.theme-light .section-title {
   color: rgba(0, 0, 0, 0.95);
 }
