@@ -42,11 +42,47 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
   const [corsMessage, setCorsMessage] = useState<string>('');
   const [showCorsModal, setShowCorsModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const modalRef = React.useRef<HTMLDivElement>(null);
 
   const isDarkMode = theme === 'dark';
 
   useEffect(() => {
     loadConfig();
+    
+    // Focus trap
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0] as HTMLElement;
+        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    
+    // Focus first input on mount
+    setTimeout(() => {
+      const firstInput = modalRef.current?.querySelector('input');
+      if (firstInput) firstInput.focus();
+    }, 100);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   const loadConfig = async () => {
@@ -317,6 +353,7 @@ const Settings: React.FC<SettingsProps> = ({ onClose, theme, onThemeChange, high
   return (
     <div className={`settings-overlay ${isClosing ? 'closing' : ''}`} onClick={handleOverlayClick} role="presentation">
       <div 
+        ref={modalRef}
         className={`settings-modal ${isClosing ? 'closing' : ''}`}
         role="dialog"
         aria-modal="true"

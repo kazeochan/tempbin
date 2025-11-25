@@ -10,7 +10,7 @@ const OnboardingWizardSkeleton: React.FC = () => {
         <div className="wizard-main">
           <div className="wizard-header">
             <div className="wizard-progress">
-              {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+              {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
                 <div key={i} className="skeleton-pulse skeleton-dot"></div>
               ))}
             </div>
@@ -23,6 +23,10 @@ const OnboardingWizardSkeleton: React.FC = () => {
             <div className="wizard-form" style={{ width: '100%', marginTop: '20px' }}>
               <div className="form-group">
                 <div className="skeleton-pulse skeleton-label"></div>
+                <div className="skeleton-pulse skeleton-input"></div>
+              </div>
+              <div className="form-group" style={{ marginTop: '16px' }}>
+                <div className="skeleton-pulse skeleton-label" style={{ width: '40%' }}></div>
                 <div className="skeleton-pulse skeleton-input"></div>
               </div>
             </div>

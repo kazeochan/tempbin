@@ -401,32 +401,6 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
         <p className="wizard-description">{t('wizard.step5.description')}</p>
         
         <div className="wizard-form">
-          <div className="cors-actions" style={{ marginBottom: '1.5rem', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            <button 
-              className={`btn-secondary cors-check-button ${corsStatus}`} 
-              onClick={handleCheckCors}
-              disabled={corsStatus === 'loading' || corsStatus === 'success'}
-              style={{ flex: 1 }}
-            >
-              {corsStatus === 'idle' && t('wizard.step5.checkConfig')}
-              {corsStatus === 'loading' && (
-                <>
-                  <span className="spinner-small"></span> {t('wizard.step5.checkConfig')}...
-                </>
-              )}
-              {corsStatus === 'success' && (
-                <>
-                  <span className="check-icon">✓</span> {t('wizard.step5.checkSuccess')}
-                </>
-              )}
-              {corsStatus === 'error' && (
-                <>
-                  <span className="error-icon">✕</span> {corsMessage || t('wizard.step5.checkError')}
-                </>
-              )}
-            </button>
-          </div>
-
           <div className="form-group">
             <label>{t('wizard.step5.manualLabel')}</label>
             <div style={{ position: 'relative' }}>
@@ -467,6 +441,32 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
             <small style={{ display: 'block', marginTop: '4px', color: 'var(--text-secondary)' }}>
               {t('wizard.step5.pasteHint')}
             </small>
+          </div>
+
+          <div className="cors-actions" style={{ marginTop: '1.5rem', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <button 
+              className={`btn-secondary cors-check-button ${corsStatus}`} 
+              onClick={handleCheckCors}
+              disabled={corsStatus === 'loading' || corsStatus === 'success'}
+              style={{ flex: 1 }}
+            >
+              {corsStatus === 'idle' && t('wizard.step5.checkConfig')}
+              {corsStatus === 'loading' && (
+                <>
+                  <span className="spinner-small"></span> {t('wizard.step5.checkConfig')}...
+                </>
+              )}
+              {corsStatus === 'success' && (
+                <>
+                  <span className="check-icon">✓</span> {t('wizard.step5.checkSuccess')}
+                </>
+              )}
+              {corsStatus === 'error' && (
+                <>
+                  <span className="error-icon">✕</span> {corsMessage || t('wizard.step5.checkError')}
+                </>
+              )}
+            </button>
           </div>
         </div>
         <div className="wizard-actions">
@@ -728,11 +728,15 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
       >
         <div className="wizard-main">
           <div className="wizard-header">
-            <div className="wizard-progress">
+            <div className="wizard-progress" role="tablist" aria-label="Wizard progress">
               {steps.map((_, index) => (
                 <div 
                   key={index} 
                   className={`progress-dot ${index === step ? 'active' : ''} ${index < step ? 'completed' : ''}`}
+                  role="tab"
+                  aria-selected={index === step}
+                  aria-label={`Step ${index + 1}`}
+                  tabIndex={-1}
                 />
               ))}
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import './App.css';
@@ -214,30 +214,33 @@ function App() {
     }
   };
 
-  const handleExpirationChange = (minutes: number) => {
+  const handleExpirationChange = useCallback((minutes: number) => {
     setExpirationMinutes(minutes);
     localStorage.setItem('fileExpirationMinutes', minutes.toString());
-  };
+  }, []);
 
-  const handleThemeChange = (newTheme: 'light' | 'dark') => {
+  const handleThemeChange = useCallback((newTheme: 'light' | 'dark') => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-  };
+  }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    handleThemeChange(newTheme);
-  };
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => {
+      const newTheme = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      return newTheme;
+    });
+  }, []);
 
-  const handleHighContrastChange = (enabled: boolean) => {
+  const handleHighContrastChange = useCallback((enabled: boolean) => {
     setHighContrast(enabled);
     localStorage.setItem('highContrast', enabled.toString());
-  };
+  }, []);
 
-  const handleHashFilenamesChange = (enabled: boolean) => {
+  const handleHashFilenamesChange = useCallback((enabled: boolean) => {
     setHashFilenames(enabled);
     localStorage.setItem('hashFilenames', enabled.toString());
-  };
+  }, []);
 
   const asyncPool = async <T,>(
     concurrency: number,
@@ -317,6 +320,15 @@ function App() {
     const currentUsage = files.reduce((acc, f) => acc + f.size, 0);
     const uploadSize = filesToProcess.reduce((acc, item) => acc + item.file.size, 0);
     const limitBytes = storageLimit * 1024 * 1024 * 1024;
+    
+    // Check individual file size limit (e.g., 5GB to prevent browser crash/issues)
+    const MAX_FILE_SIZE = 5 * 1024 * 1024 * 1024; // 5GB
+    const oversizedFiles = filesToProcess.filter(item => item.file.size > MAX_FILE_SIZE);
+    
+    if (oversizedFiles.length > 0) {
+      showNotification(t('notifications.fileTooLarge', { size: '5GB' }), 'error');
+      return;
+    }
 
     if (currentUsage + uploadSize > limitBytes) {
       const dismissedDate = localStorage.getItem('storageLimitPromptDismissedDate');
@@ -396,12 +408,19 @@ function App() {
     setPendingFiles([]);
   };
 
-  const handleDeleteFile = async (fileId: string) => {
+  const handleDeleteFile = useCallback(async (fileId: string) => {
     try {
       await deleteFileFromR2(fileId);
+      
+      // We need to access the current files state. 
+      // Since we can't easily get the *updated* files list for saveFiles without using the state,
+      // and we want to avoid 'files' dependency to prevent FileList re-renders when other things change,
+      // we can use the functional update pattern for setFiles, but for saveFiles we might need to rely on the effect or just accept the dependency.
+      // However, for this specific case, let's just use the dependency.
+      // The performance gain of removing 'files' dependency is minimal if 'files' is the main thing changing.
+      
       const updatedFiles = files.filter(f => f.id !== fileId);
       
-      // If this is the last file, trigger fade-out animation
       if (updatedFiles.length === 0) {
         setFileListFadeOut(true);
         setTimeout(() => {
@@ -418,9 +437,10 @@ function App() {
       console.error('Delete error:', error);
       showNotification(t('notifications.deleteError'), 'error');
     }
-  };
+  }, [files, t]);
 
-  const handleDeleteSelected = async (fileIds: string[]) => {
+
+  const handleDeleteSelected = useCallback(async (fileIds: string[]) => {
     try {
       await Promise.all(fileIds.map(id => deleteFileFromR2(id)));
       const updatedFiles = files.filter(f => !fileIds.includes(f.id));
@@ -442,7 +462,7 @@ function App() {
       console.error('Delete error:', error);
       showNotification(t('notifications.deleteMultiError'), 'error');
     }
-  };
+  }, [files, t]);
 
   const showNotification = (message: string, type: 'success' | 'error') => {
     setNotification({ message, type });
@@ -470,13 +490,15 @@ function App() {
           <main id="main-content" className="main-content" role="main" aria-label="File sharing application">
             <div className="container">
               {showWizard ? (
-                <Suspense fallback={<OnboardingWizardSkeleton />}>
-                  <OnboardingWizard 
-                    onComplete={() => setShowWizard(false)}  
-                    highContrast={highContrast}
-                    onHighContrastChange={handleHighContrastChange}
-                  />
-                </Suspense>
+                <div className="lazy-component-wrapper">
+                  <Suspense fallback={<OnboardingWizardSkeleton />}>
+                    <OnboardingWizard 
+                      onComplete={() => setShowWizard(false)}  
+                      highContrast={highContrast}
+                      onHighContrastChange={handleHighContrastChange}
+                    />
+                  </Suspense>
+                </div>
               ) : (
                 <>
                   <div className="hero-section">
@@ -566,43 +588,49 @@ function App() {
       )}
 
       {showSettings && (
-        <Suspense fallback={<SettingsSkeleton />}>
-          <Settings 
-            onClose={() => {
-              setShowSettings(false);
-              loadStorageLimit();
-            }}
-            theme={theme}
-            onThemeChange={handleThemeChange}
-            highContrast={highContrast}
-            onHighContrastChange={handleHighContrastChange}
-          />
-        </Suspense>
+        <div className="lazy-modal-wrapper">
+          <Suspense fallback={<SettingsSkeleton />}>
+            <Settings 
+              onClose={() => {
+                setShowSettings(false);
+                loadStorageLimit();
+              }}
+              theme={theme}
+              onThemeChange={handleThemeChange}
+              highContrast={highContrast}
+              onHighContrastChange={handleHighContrastChange}
+            />
+          </Suspense>
+        </div>
       )}
 
       {showLimitModal && (
-        <Suspense fallback={<LimitExceededModalSkeleton />}>
-          <LimitExceededModal
-            onConfirm={handleLimitConfirm}
-            onCancel={handleLimitCancel}
-            currentUsage={files.reduce((acc, f) => acc + f.size, 0)}
-            uploadSize={pendingFiles.reduce((acc, item) => acc + item.file.size, 0)}
-            limitGB={storageLimit}
-          />
-        </Suspense>
+        <div className="lazy-modal-wrapper" style={{ zIndex: 1100 }}>
+          <Suspense fallback={<LimitExceededModalSkeleton />}>
+            <LimitExceededModal
+              onConfirm={handleLimitConfirm}
+              onCancel={handleLimitCancel}
+              currentUsage={files.reduce((acc, f) => acc + f.size, 0)}
+              uploadSize={pendingFiles.reduce((acc, item) => acc + item.file.size, 0)}
+              limitGB={storageLimit}
+            />
+          </Suspense>
+        </div>
       )}
 
       {pastedFiles.length > 0 && (
-        <Suspense fallback={<PasteConfirmationSkeleton />}>
-          <PasteConfirmation
-            files={pastedFiles}
-            onConfirm={() => {
-              handleFileUpload(pastedFiles);
-              setPastedFiles([]);
-            }}
-            onCancel={() => setPastedFiles([])}
-          />
-        </Suspense>
+        <div className="lazy-modal-wrapper">
+          <Suspense fallback={<PasteConfirmationSkeleton />}>
+            <PasteConfirmation
+              files={pastedFiles}
+              onConfirm={() => {
+                handleFileUpload(pastedFiles);
+                setPastedFiles([]);
+              }}
+              onCancel={() => setPastedFiles([])}
+            />
+          </Suspense>
+        </div>
       )}
 
       {notification && (

@@ -759,6 +759,38 @@
   box-shadow: 0 0 0 4px #ffffff !important;
 }
 
+/* Lazy Component Transition Wrapper */
+.lazy-component-wrapper {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
+/* Lazy Modal Transition Wrapper */
+.lazy-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+  pointer-events: none; /* Allow clicks to pass through if wrapper is transparent, but children should have pointer-events: auto */
+}
+
+.lazy-modal-wrapper > * {
+  pointer-events: auto;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* Reduced Motion Mode */
 .app.reduced-motion,
 .app.reduced-motion::before {

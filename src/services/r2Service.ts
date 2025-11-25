@@ -138,7 +138,7 @@ const createAwsSignature = async (
 
 const sha256 = async (data: string | BufferSource): Promise<string> => {
   if (!crypto || !crypto.subtle) {
-    throw new Error('crypto.subtle is not available. Please use HTTPS or localhost to enable secure cryptography APIs required for R2 uploads.');
+    throw new Error('Secure context required. Please use HTTPS or localhost to enable cryptography APIs.');
   }
   const encoder = new TextEncoder();
   const dataBuffer = typeof data === 'string' ? encoder.encode(data) : data;
@@ -450,6 +450,90 @@ export const getBucketCors = async (config: R2Config): Promise<boolean> => {
   }
 };
 
+export const putBucketLifecycle = async (config: R2Config, rules: any[]): Promise<void> => {
+  const endpoint = `https://${config.accountId}.r2.cloudflarestorage.com`;
+  const path = `/${config.bucketName}`;
+  const queryParams = { lifecycle: '' };
+  const url = `${endpoint}${path}?lifecycle`;
+  const amzDate = getAmzDate();
+
+  // Construct XML
+  const rulesXml = rules.map(rule => `
+    <Rule>
+      <ID>${rule.id}</ID>
+      <Filter>
+        <Prefix>${rule.prefix}</Prefix>
+      </Filter>
+      <Status>${rule.status}</Status>
+      ${rule.expirationDays ? `<Expiration><Days>${rule.expirationDays}</Days></Expiration>` : ''}
+      ${rule.abortIncompleteMultipartUpload ? `<AbortIncompleteMultipartUpload><DaysAfterInitiation>${rule.abortIncompleteMultipartUpload}</DaysAfterInitiation></AbortIncompleteMultipartUpload>` : ''}
+    </Rule>
+  `).join('');
+
+  const xmlBody = `
+    <LifecycleConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+      ${rulesXml}
+    </LifecycleConfiguration>
+  `.trim();
+
+  const headers: Record<string, string> = {
+    'Host': `${config.accountId}.r2.cloudflarestorage.com`,
+    'X-Amz-Date': amzDate,
+    'Content-Type': 'application/xml',
+    'X-Amz-Content-Sha256': await sha256(xmlBody),
+  };
+
+  const authorization = await createAwsSignature('PUT', path, headers, config, xmlBody, queryParams);
+  headers['Authorization'] = authorization;
+
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers,
+    body: xmlBody,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to set Lifecycle policy: ${response.status} ${response.statusText}`);
+  }
+};
+
+export const getBucketLifecycle = async (config: R2Config): Promise<boolean> => {
+  const endpoint = `https://${config.accountId}.r2.cloudflarestorage.com`;
+  const path = `/${config.bucketName}`;
+  const queryParams = { lifecycle: '' };
+  const url = `${endpoint}${path}?lifecycle`;
+  const amzDate = getAmzDate();
+
+  const headers: Record<string, string> = {
+    'Host': `${config.accountId}.r2.cloudflarestorage.com`,
+    'X-Amz-Date': amzDate,
+    'X-Amz-Content-Sha256': await sha256(''),
+  };
+
+  const authorization = await createAwsSignature('GET', path, headers, config, '', queryParams);
+  headers['Authorization'] = authorization;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
+    });
+
+    if (response.status === 404) {
+      return false;
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to get Lifecycle policy: ${response.status} ${response.statusText}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error checking Lifecycle:', error);
+    return false;
+  }
+};
+
 const MULTIPART_THRESHOLD = 100 * 1024 * 1024; // 100MB
 const PART_SIZE = 10 * 1024 * 1024; // 10MB
 const MAX_CONCURRENT_PARTS = 3;
@@ -467,35 +551,6 @@ const retry = async <T>(
     await new Promise(resolve => setTimeout(resolve, delay));
     return retry(fn, retries - 1, delay * backoff, backoff);
   }
-};
-
-const runWithConcurrency = async <T>(
-  items: any[],
-  fn: (item: any, index: number) => Promise<T>,
-  concurrency: number
-): Promise<T[]> => {
-  const results: T[] = new Array(items.length);
-  const executing: Promise<void>[] = [];
-  
-  for (const [index, item] of items.entries()) {
-    const p = Promise.resolve().then(() => fn(item, index)).then(result => {
-      results[index] = result;
-    });
-    
-    executing.push(p);
-    
-    if (executing.length >= concurrency) {
-      await Promise.race(executing);
-      // Remove completed promises
-      // Note: Promise.race doesn't remove the promise, we need to manage the list.
-      // A simpler way for this specific helper:
-    }
-    
-    // Clean up executing array
-    // This is a bit tricky without a proper pool implementation.
-    // Let's use a simpler approach for the helper.
-  }
-  return Promise.all(executing).then(() => results);
 };
 
 // Better simple pool implementation

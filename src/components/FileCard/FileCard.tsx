@@ -97,7 +97,14 @@ const FileCard: React.FC<FileCardProps> = ({ file, onDelete }) => {
           </svg>
           <span className="time-left">{timeLeft}</span>
         </div>
-        <div className="progress-bar">
+        <div 
+          className="progress-bar"
+          role="progressbar"
+          aria-valuenow={Math.round(progress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Time remaining: ${timeLeft}`}
+        >
           <div 
             className="progress-fill" 
             style={{ width: `${progress}%` }}

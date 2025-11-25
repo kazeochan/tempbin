@@ -134,7 +134,14 @@ const UploadZone: React.FC<UploadZoneProps> = ({ onFileUpload, isUploading, expi
         <p className="upload-text">{t('upload.uploading')}</p>
         {progress !== undefined && (
           <>
-            <div className="progress-container">
+            <div 
+              className="progress-container"
+              role="progressbar"
+              aria-valuenow={Math.round(progress)}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label="Upload progress"
+            >
               <div className="progress-bar" style={{ width: `${progress}%` }}></div>
             </div>
             <span className="progress-text">{Math.round(progress)}%</span>

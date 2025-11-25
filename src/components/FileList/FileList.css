@@ -373,21 +373,26 @@
   }
 
   .file-list-table-header {
-    grid-template-columns: 32px 1fr 70px;
+    grid-template-columns: 32px 1fr 50px 70px;
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.65rem;
   }
 
   .file-list-row {
-    grid-template-columns: 32px 1fr 70px;
+    grid-template-columns: 32px 1fr 50px 70px;
     gap: 0.5rem;
     padding: 0.75rem 0.75rem;
   }
 
-  .file-cell-size,
-  .file-cell-timer {
+  .file-cell-size {
     display: none;
+  }
+
+  .file-cell-timer {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.75rem;
   }
 
   .file-name-wrapper {
@@ -433,13 +438,17 @@
   }
 
   .file-list-table-header {
-    grid-template-columns: 28px 1fr 60px;
+    grid-template-columns: 28px 1fr 45px 60px;
     padding: 0.4rem 0.5rem;
   }
 
   .file-list-row {
-    grid-template-columns: 28px 1fr 60px;
+    grid-template-columns: 28px 1fr 45px 60px;
     padding: 0.6rem 0.5rem;
+  }
+
+  .file-cell-timer {
+    font-size: 0.7rem;
   }
 
   .file-cell-checkbox input[type="checkbox"] {
