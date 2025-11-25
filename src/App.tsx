@@ -104,10 +104,21 @@ function App() {
     const handlePaste = (e: ClipboardEvent) => {
       if (showSettings || showWizard || isUploading || pastedFiles.length > 0) return;
       
-      if (e.clipboardData && e.clipboardData.files.length > 0) {
-        e.preventDefault();
-        const files = Array.from(e.clipboardData.files);
-        setPastedFiles(files);
+      if (e.clipboardData) {
+        if (e.clipboardData.files.length > 0) {
+          e.preventDefault();
+          const files = Array.from(e.clipboardData.files);
+          setPastedFiles(files);
+        } else {
+          const text = e.clipboardData.getData('text');
+          if (text) {
+            e.preventDefault();
+            const blob = new Blob([text], { type: 'text/plain' });
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+            const file = new File([blob], `pasted-text-${timestamp}.txt`, { type: 'text/plain' });
+            setPastedFiles([file]);
+          }
+        }
       }
     };
     window.addEventListener('paste', handlePaste);

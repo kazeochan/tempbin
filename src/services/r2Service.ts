@@ -91,9 +91,14 @@ const generateFileId = (): string => {
 const hashFileName = async (fileName: string): Promise<string> => {
   const extension = fileName.includes('.') ? fileName.substring(fileName.lastIndexOf('.')) : '';
   const now = new Date();
-  const timestamp = now.toISOString().replace(/[-:T.]/g, '').slice(0, 14); // YYYYMMDDHHMMSS
-  const random = Math.random().toString(36).substring(2, 8);
-  return `${timestamp}-${random}${extension}`;
+  const timestamp = now.toISOString().slice(0, 19).replace(/:/g, '-');
+  
+  // Generate a pseudo-random hex string that looks like a hash
+  const randomBytes = new Uint8Array(8);
+  crypto.getRandomValues(randomBytes);
+  const hash = Array.from(randomBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+  
+  return `${hash}-${timestamp}${extension}`;
 };
 
 const createAwsSignature = async (
