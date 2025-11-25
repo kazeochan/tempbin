@@ -1,0 +1,257 @@
+{
+  "_comment": "TODO: Review all translations for user-friendliness and accuracy",
+  "app": {
+    "title": "TempBin - Temporary File Sharing with Auto-Expiring Links",
+    "description": "Share files temporarily with auto-expiring links. Upload files and get shareable URLs that automatically delete after 1-10 minutes."
+  },
+  "header": {
+    "logo": "tempbin",
+    "github": "Visit kazeochan on GitHub (opens in new tab)",
+    "settings": "Settings",
+    "openSettings": "Open settings",
+    "language": "Language",
+    "lightMode": "Switch to light mode",
+    "darkMode": "Switch to dark mode"
+  },
+  "hero": {
+    "title": "Share Files Temporarily",
+    "subtitle": "Upload your files and we'll create a shareable link that expires in {{minutes}} minute",
+    "subtitle_plural": "Upload your files and we'll create a shareable link that expires in {{minutes}} minutes"
+  },
+  "expiration": {
+    "label": "Files expire after:",
+    "minutes": "{{count}} minute",
+    "minutes_plural": "{{count}} minutes",
+    "min1": "1 min",
+    "min5": "5 min",
+    "min10": "10 min"
+  },
+  "hashFilename": {
+    "label": "Hide Filenames",
+    "hint": "Encrypt filenames to protect your privacy",
+    "enabled": "Filenames will be encrypted",
+    "disabled": "Use original filenames"
+  },
+  "upload": {
+    "title": "Drag your files here",
+    "subtitle": "paste text, or click to select",
+    "info": "Files will expire after {{minutes}} minute",
+    "info_plural": "Files will expire after {{minutes}} minutes",
+    "uploading": "Uploading...",
+    "ariaLabel": "Upload file area. Click to select a file or drag and drop a file here"
+  },
+  "fileList": {
+    "title": "Files",
+    "deleteSelected": "Delete ({{count}})",
+    "deleteSelectedAria": "Delete {{count}} selected file(s)",
+    "copyAllLinks": "Copy All Links",
+    "copyAllLinksAria": "Copy all file links to clipboard",
+    "selectAllAria": "Select all files",
+    "selectFileAria": "Select {{name}}",
+    "name": "Name",
+    "size": "Size",
+    "expires": "Expires",
+    "actions": "Actions",
+    "expired": "Expired",
+    "copied": "✓",
+    "copiedAll": "Copied!",
+    "deleteConfirm": "Delete {{count}} selected file(s)?",
+    "copyLinkTitle": "Copy link",
+    "copyLinkAria": "Copy link for {{name}}",
+    "openFileTitle": "Open file",
+    "openFileAria": "Open {{name}}",
+    "deleteFileTitle": "Delete file",
+    "deleteFileAria": "Delete {{name}}"
+  },
+  "fileCard": {
+    "delete": "Delete file",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "open": "Open"
+  },
+  "empty": {
+    "title": "No files uploaded yet",
+    "subtitle": "Upload your first file to get started"
+  },
+  "storage": {
+    "usage": "Storage Usage"
+  },
+  "settings": {
+    "title": "Settings",
+    "closeAria": "Close settings",
+    "r2Title": "Cloudflare R2",
+    "infoTitle": "Configure your Cloudflare R2 bucket",
+    "infoDescription": "You'll need your R2 credentials from the Cloudflare dashboard. All data is stored locally in your browser.",
+    "accountId": "Account ID",
+    "accountIdPlaceholder": "Your Cloudflare account ID",
+    "bucketName": "Bucket Name",
+    "bucketNamePlaceholder": "my-bucket",
+    "accessKeyId": "Access Key ID",
+    "accessKeyIdPlaceholder": "Your R2 access key ID",
+    "secretAccessKey": "Secret Access Key",
+    "secretAccessKeyPlaceholder": "Your R2 secret access key",
+    "publicUrl": "Public URL (Optional)",
+    "publicUrlPlaceholder": "https://your-domain.com",
+    "publicUrlHint": "Custom domain for public file access",
+    "storageLimit": "Storage Limit",
+    "storageLimitHint": "Set your monthly storage limit (Free plan: 10 GB)",
+    "appearance": "Appearance",
+    "themeMode": "Theme Mode",
+    "themeModeHint": "Choose between light and dark theme",
+    "light": "Light",
+    "dark": "Dark",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "highContrast": "High Contrast",
+    "highContrastHint": "Increase contrast for better visibility",
+    "highContrastOn": "Enable High Contrast",
+    "highContrastOff": "Disable High Contrast",
+    "language": "Language",
+    "languageHint": "Choose your preferred language",
+    "cancel": "Cancel",
+    "save": "Save Settings",
+    "saving": "Saving...",
+    "requiredFields": "Please fill in all required fields",
+    "saveSuccess": "Settings saved successfully!",
+    "saveError": "Failed to save settings",
+    "clearData": "Clear All Data",
+    "clearDataConfirm": "Are you sure you want to clear all data? This action cannot be undone.",
+    "clearDataSuccess": "All data cleared successfully"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidAccountId": "Invalid Account ID (must be 32 hex characters)",
+    "bucketNameLength": "Bucket name must be between 3 and 63 characters",
+    "bucketNameChars": "Only lowercase letters, numbers, and hyphens allowed",
+    "bucketNameHyphen": "Bucket name cannot start or end with a hyphen",
+    "invalidAccessKeyId": "Invalid Access Key ID (must be 32 hex characters)",
+    "invalidSecretAccessKey": "Invalid Secret Access Key (must be 64 hex characters)",
+    "invalidUrl": "Invalid URL format",
+    "invalidUrlProtocol": "URL must start with http:// or https://"
+  },
+  "wizard": {
+    "welcome": {
+      "title": "Welcome to TempBin",
+      "subtitle": "Let's set up your Cloudflare R2 storage.",
+      "start": "Get Started"
+    },
+    "step1": {
+      "title": "Account & Bucket",
+      "description": "Enter your Cloudflare Account ID and the R2 Bucket Name you want to use.",
+      "instructions": {
+        "title": "How to find these?",
+        "step1": "Log in to your Cloudflare dashboard.",
+        "step2": "Navigate to R2 from the sidebar.",
+        "step3": "Your Account ID is shown on the right side of the R2 overview page.",
+        "step4": "Create a new bucket or use an existing one and copy its name."
+      }
+    },
+    "step2": {
+      "title": "Credentials",
+      "description": "Enter your R2 Access Key ID and Secret Access Key.",
+      "instructions": {
+        "title": "How to generate keys?",
+        "step1": "In the R2 dashboard, click on 'Manage R2 API Tokens' on the right.",
+        "step2": "Click 'Create API Token'.",
+        "step3": "Select 'Object Read & Write' permissions.",
+        "step4": "Create the token and copy the Access Key ID and Secret Access Key."
+      }
+    },
+    "step3": {
+      "title": "Public Access",
+      "description": "Optionally configure a custom domain for public file access.",
+      "instructions": {
+        "title": "Setting up public access",
+        "step1": "Go to your bucket settings in the R2 dashboard.",
+        "step2": "Under 'Public Access', you can connect a custom domain or allow public access via R2.dev subdomain.",
+        "step3": "Enter the full URL (e.g., https://files.example.com) here."
+      }
+    },
+    "step4": {
+      "title": "Storage Limit",
+      "description": "Set a storage limit to help you manage your R2 usage and costs.",
+      "instructions": {
+        "title": "About Storage Limits",
+        "step1": "Cloudflare R2 offers a generous free plan (10 GB/month).",
+        "step2": "Set a limit here and we'll warn you before you exceed it.",
+        "step3": "This is only a browser-side check and does not enforce limits on Cloudflare."
+      }
+    },
+    "step5": {
+      "title": "CORS Setup",
+      "description": "Configure Cross-Origin Resource Sharing (CORS) to allow uploads from this website.",
+      "instructions": {
+        "title": "How to set up CORS",
+        "step1": "Go to your bucket settings in the R2 dashboard.",
+        "step2": "Locate the CORS Policy section.",
+        "step3": "Copy the JSON configuration below.",
+        "step4": "Paste it into the CORS Policy editor and save."
+      },
+      "jsonLabel": "CORS Configuration JSON",
+      "manualLabel": "Manual Configuration (JSON)",
+      "autoConfigure": "Configure Automatically",
+      "configuring": "Configuring...",
+      "checkConfig": "Check Configuration",
+      "autoSuccess": "CORS configuration applied successfully!",
+      "autoError": "Failed to apply CORS configuration",
+      "checkSuccess": "CORS configuration found!",
+      "checkNotFound": "No CORS configuration found.",
+      "checkError": "Error checking CORS configuration",
+      "copy": "Copy",
+      "pasteHint": "Paste this into your R2 bucket's CORS policy settings."
+    },
+    "step6": {
+      "title": "Auto-Delete Setup",
+      "description": "Set up auto-delete rules so files are automatically removed after 24 hours.",
+      "instructions": {
+        "title": "How to set up auto-delete",
+        "step1": "Go to your bucket settings in the R2 dashboard.",
+        "step2": "Find the 'Object Lifecycle' section.",
+        "step3": "Add a rule to expire objects after 1 day (or your preferred duration).",
+        "step4": "This ensures files are deleted from the server even if you close the page."
+      }
+    },
+    "completion": {
+      "title": "All Set!",
+      "subtitle": "Your R2 storage is configured and ready to use.",
+      "finish": "Start Sharing"
+    },
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip"
+  },
+  "paste": {
+    "title": "Confirm Upload",
+    "fileName": "Name",
+    "fileSize": "Size",
+    "fileType": "Type",
+    "cancel": "Cancel",
+    "upload": "Upload"
+  },
+  "limit": {
+    "title": "Storage Limit About to Be Exceeded",
+    "message": "Uploading these files will exceed your storage limit.",
+    "currentUsage": "Current Usage",
+    "uploadSize": "This Upload",
+    "newTotal": "Total After Upload",
+    "limit": "Your Limit",
+    "dontShowAgain": "Don't show again today",
+    "cancel": "Cancel",
+    "continue": "Continue Upload"
+  },
+  "notifications": {
+    "uploadSuccess": "File uploaded!",
+    "uploadMultiSuccess": "{{count}} files uploaded successfully!",
+    "uploadError": "Upload failed. Please check your R2 settings.",
+    "deleteSuccess": "File deleted!",
+    "deleteError": "Failed to delete file.",
+    "deleteMultiSuccess": "{{count}} files deleted successfully!",
+    "deleteMultiError": "Failed to delete files.",
+    "duplicateFile": "Skipped duplicate file(s).",
+    "fileTooLarge": "File is too large (max {{size}})."
+  },
+  "accessibility": {
+    "skipToMain": "Skip to main content",
+    "mainContent": "File sharing application"
+  }
+}

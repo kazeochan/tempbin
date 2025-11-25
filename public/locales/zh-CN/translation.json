@@ -1,0 +1,257 @@
+{
+  "_comment": "TODO: Review all translations for user-friendliness and accuracy",
+  "app": {
+    "title": "TempBin - 临时文件分享",
+    "description": "使用自动过期链接安全分享文件"
+  },
+  "header": {
+    "logo": "tempbin",
+    "github": "在 GitHub 上访问 kazeochan（在新标签页打开）",
+    "settings": "设置",
+    "openSettings": "打开设置",
+    "language": "语言",
+    "lightMode": "切换到亮色模式",
+    "darkMode": "切换到深色模式"
+  },
+  "hero": {
+    "title": "临时分享文件",
+    "subtitle": "上传文件，我们会创建一个 {{minutes}} 分钟后过期的分享链接",
+    "subtitle_plural": "上传文件，我们会创建一个 {{minutes}} 分钟后过期的分享链接"
+  },
+  "expiration": {
+    "label": "文件将在以下时间后过期：",
+    "minutes": "{{count}} 分钟",
+    "minutes_plural": "{{count}} 分钟",
+    "min1": "1 分钟",
+    "min5": "5 分钟",
+    "min10": "10 分钟"
+  },
+  "hashFilename": {
+    "label": "隐藏文件名",
+    "hint": "加密文件名保护您的隐私",
+    "enabled": "文件名将被加密",
+    "disabled": "使用原始文件名"
+  },
+  "upload": {
+    "title": "拖动文件到这里",
+    "subtitle": "粘贴文本或点击选择",
+    "info": "文件将在 {{minutes}} 分钟后过期",
+    "info_plural": "文件将在 {{minutes}} 分钟后过期",
+    "uploading": "正在上传...",
+    "ariaLabel": "上传文件区域。点击选择文件或将文件拖放到此处"
+  },
+  "fileList": {
+    "title": "文件",
+    "deleteSelected": "删除 ({{count}})",
+    "deleteSelectedAria": "删除 {{count}} 个已选文件",
+    "copyAllLinks": "复制所有链接",
+    "copyAllLinksAria": "复制所有文件链接到剪贴板",
+    "selectAllAria": "选择所有文件",
+    "selectFileAria": "选择 {{name}}",
+    "name": "名称",
+    "size": "大小",
+    "expires": "过期时间",
+    "actions": "操作",
+    "expired": "已过期",
+    "copied": "✓",
+    "copiedAll": "已复制！",
+    "deleteConfirm": "删除 {{count}} 个已选文件？",
+    "copyLinkTitle": "复制链接",
+    "copyLinkAria": "复制 {{name}} 的链接",
+    "openFileTitle": "打开文件",
+    "openFileAria": "打开 {{name}}",
+    "deleteFileTitle": "删除文件",
+    "deleteFileAria": "删除 {{name}}"
+  },
+  "fileCard": {
+    "delete": "删除文件",
+    "copyLink": "复制链接",
+    "copied": "已复制！",
+    "open": "打开"
+  },
+  "empty": {
+    "title": "尚未上传文件",
+    "subtitle": "上传您的第一个文件以开始使用"
+  },
+  "storage": {
+    "usage": "存储使用量"
+  },
+  "settings": {
+    "title": "设置",
+    "closeAria": "关闭设置",
+    "r2Title": "Cloudflare R2",
+    "infoTitle": "配置您的 Cloudflare R2 存储桶",
+    "infoDescription": "您需要从 Cloudflare 控制台获取 R2 凭证。所有数据都只存储在您的浏览器中。",
+    "accountId": "账户 ID",
+    "accountIdPlaceholder": "您的 Cloudflare 账户 ID",
+    "bucketName": "存储桶名称",
+    "bucketNamePlaceholder": "my-bucket",
+    "accessKeyId": "访问密钥 ID",
+    "accessKeyIdPlaceholder": "您的 R2 访问密钥 ID",
+    "secretAccessKey": "秘密访问密钥",
+    "secretAccessKeyPlaceholder": "您的 R2 秘密访问密钥",
+    "publicUrl": "公开 URL（可选）",
+    "publicUrlPlaceholder": "https://your-domain.com",
+    "publicUrlHint": "用于公开文件访问的自定义域名",
+    "storageLimit": "存储限制",
+    "storageLimitHint": "设置您的每月存储限制（免费套餐为 10 GB）",
+    "appearance": "外观",
+    "themeMode": "主题模式",
+    "themeModeHint": "在亮色和深色主题之间选择",
+    "light": "亮色",
+    "dark": "深色",
+    "lightMode": "亮色模式",
+    "darkMode": "深色模式",
+    "highContrast": "高对比度",
+    "highContrastHint": "提高对比度以获得更好的可见性",
+    "highContrastOn": "启用高对比度",
+    "highContrastOff": "禁用高对比度",
+    "language": "语言",
+    "languageHint": "选择您的首选语言",
+    "cancel": "取消",
+    "save": "保存设置",
+    "saving": "正在保存...",
+    "requiredFields": "请填写所有必填字段",
+    "saveSuccess": "设置已成功保存！",
+    "saveError": "保存设置失败",
+    "clearData": "清除所有数据",
+    "clearDataConfirm": "您确定要清除所有数据吗？此操作无法撤销。",
+    "clearDataSuccess": "所有数据已成功清除"
+  },
+  "validation": {
+    "required": "此字段为必填项",
+    "invalidAccountId": "无效的账户 ID（必须是 32 位十六进制字符）",
+    "bucketNameLength": "存储桶名称必须在 3 到 63 个字符之间",
+    "bucketNameChars": "仅允许小写字母、数字和连字符",
+    "bucketNameHyphen": "存储桶名称不能以连字符开头或结尾",
+    "invalidAccessKeyId": "无效的访问密钥 ID（必须是 32 位十六进制字符）",
+    "invalidSecretAccessKey": "无效的秘密访问密钥（必须是 64 位十六进制字符）",
+    "invalidUrl": "无效的 URL 格式",
+    "invalidUrlProtocol": "URL 必须以 http:// 或 https:// 开头"
+  },
+  "wizard": {
+    "welcome": {
+      "title": "欢迎使用 TempBin",
+      "subtitle": "让我们设置您的 Cloudflare R2 存储。",
+      "start": "开始"
+    },
+    "step1": {
+      "title": "账户与存储桶",
+      "description": "输入您的 Cloudflare 账户 ID 和您想要使用的 R2 存储桶名称。",
+      "instructions": {
+        "title": "如何找到这些信息？",
+        "step1": "登录您的 Cloudflare 控制台。",
+        "step2": "从侧边栏导航到 R2。",
+        "step3": "您的账户 ID 显示在 R2 概览页面的右侧。",
+        "step4": "创建一个新存储桶或使用现有存储桶并复制其名称。"
+      }
+    },
+    "step2": {
+      "title": "凭证",
+      "description": "输入您的 R2 访问密钥 ID 和秘密访问密钥。",
+      "instructions": {
+        "title": "如何生成密钥？",
+        "step1": "在 R2 控制台中，点击右侧的“管理 R2 API 令牌”。",
+        "step2": "点击“创建 API 令牌”。",
+        "step3": "选择“对象读写”权限。",
+        "step4": "创建令牌并复制访问密钥 ID 和秘密访问密钥。"
+      }
+    },
+    "step3": {
+      "title": "公开访问",
+      "description": "可选配置用于公开文件访问的自定义域名。",
+      "instructions": {
+        "title": "设置公开访问",
+        "step1": "前往 R2 仪表板中的存储桶设置。",
+        "step2": "在“公开访问”下，您可以连接自定义域名或允许通过 R2.dev 子域名进行公开访问。",
+        "step3": "在此处输入完整 URL（例如 https://files.example.com）。"
+      }
+    },
+    "step4": {
+      "title": "存储限制",
+      "description": "设置存储限制以帮助管理您的 R2 使用情况和成本。",
+      "instructions": {
+        "title": "关于存储限制",
+        "step1": "Cloudflare R2 提供慷慨的免费套餐（每月 10 GB）。",
+        "step2": "在此设置限制，我们会在超出之前提醒您。",
+        "step3": "这只是浏览器端的检查，不会在 Cloudflare 上强制执行限制。"
+      }
+    },
+    "step5": {
+      "title": "CORS 设置",
+      "description": "配置跨源资源共享 (CORS) 以允许从本网站上传。",
+      "instructions": {
+        "title": "设置 CORS",
+        "step1": "前往 R2 仪表板中的存储桶设置。",
+        "step2": "找到 CORS 策略部分。",
+        "step3": "复制下方的 JSON 配置。",
+        "step4": "将其粘贴到 CORS 策略编辑器中并保存。"
+      },
+      "jsonLabel": "CORS 配置 JSON",
+      "manualLabel": "手动配置 (JSON)",
+      "autoConfigure": "自动配置",
+      "configuring": "正在配置...",
+      "checkConfig": "检查配置",
+      "autoSuccess": "CORS 配置已成功应用！",
+      "autoError": "应用 CORS 配置失败",
+      "checkSuccess": "发现 CORS 配置！",
+      "checkNotFound": "未找到 CORS 配置。",
+      "checkError": "检查 CORS 配置时出错",
+      "copy": "复制",
+      "pasteHint": "将其粘贴到您的 R2 存储桶的 CORS 策略设置中。"
+    },
+    "step6": {
+      "title": "生命周期策略",
+      "description": "配置生命周期规则以在 24 小时后自动删除文件。",
+      "instructions": {
+        "title": "设置生命周期规则",
+        "step1": "前往 R2 仪表板中的存储桶设置。",
+        "step2": "找到"对象生命周期"部分。",
+        "step3": "添加一条规则，使对象在 1 天后过期（或您喜欢的持续时间）。",
+        "step4": "这确保即使用户关闭页面，文件也会从服务器中删除。"
+      }
+    },
+    "completion": {
+      "title": "设置完成！",
+      "subtitle": "您的 R2 存储已配置并准备就绪。",
+      "finish": "开始分享"
+    },
+    "next": "下一步",
+    "back": "返回",
+    "skip": "跳过"
+  },
+  "paste": {
+    "title": "确认上传",
+    "fileName": "名称",
+    "fileSize": "大小",
+    "fileType": "类型",
+    "cancel": "取消",
+    "upload": "上传"
+  },
+  "limit": {
+    "title": "存储限制即将超出",
+    "message": "上传这些文件将超出您的存储限制。",
+    "currentUsage": "当前使用量",
+    "uploadSize": "本次上传",
+    "newTotal": "上传后总量",
+    "limit": "限制",
+    "dontShowAgain": "今天不再显示",
+    "cancel": "取消",
+    "continue": "继续上传"
+  },
+  "notifications": {
+    "uploadSuccess": "文件上传成功！",
+    "uploadMultiSuccess": "已成功上传 {{count}} 个文件！",
+    "uploadError": "上传文件失败。请检查您的 R2 设置。",
+    "deleteSuccess": "文件删除成功！",
+    "deleteError": "删除文件失败。",
+    "deleteMultiSuccess": "已成功删除 {{count}} 个文件！",
+    "deleteMultiError": "删除文件失败。",
+    "duplicateFile": "已跳过重复文件。",
+    "fileTooLarge": "文件太大（最大 {{size}}）。"
+  },
+  "accessibility": {
+    "skipToMain": "跳至主要内容",
+    "mainContent": "文件分享应用程序"
+  }
+}
